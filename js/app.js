@@ -65,7 +65,7 @@ function overKarty() {
     const prvniIndex = karty.indexOf(prvniKarta);
     const druhyIndex = karty.indexOf(druhaKarta);
 
-    if (prvniKarta.url === druhaKarta.url && prvniKarta.id === druhaKarta.id) {
+    if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
         otoceneKarty = [];
     } else {
         prvniKarta.revealed = false;
