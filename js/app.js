@@ -126,8 +126,13 @@ function overKarty() {
     const prvniIndex = karty.indexOf(prvniKarta);
     const druhyIndex = karty.indexOf(druhaKarta);
 
+    const prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
+    const druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
+
     if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
         otoceneKarty = [];
+        prvniElement.classList.add('skryta-karta');
+        druhyElement.classList.add('skryta-karta');
         listHracu[aktualniHrac].pocetBodu++;
         console.log(listHracu);
     } else {
@@ -139,9 +144,6 @@ function overKarty() {
             aktualniHrac = 0;
         }
         naTahu.innerText = listHracu[aktualniHrac].name;
-
-        const prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
-        const druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
 
         setTimeout(() => {
             prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
