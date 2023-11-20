@@ -13,10 +13,12 @@ let aktualniHrac = 0;
 
 local.addEventListener('click', function(){
     menu.innerHTML = '<div id="hraci" class="flex-collumn"><label>Jméno hráče č. 1:</label><input type="text" value="hrac1" id="hrac1"></div><button id="pridatHrace">Přidat hráče</button>';
-    menu.innerHTML += '<label>Počet kartiček v řadě:</label><input type="number" id ="radky" min="4" max="8" value="8"><label>Počet kartiček ve sloupci</label><input type="number" id ="sloupce" min="4" max="8" value="8"><button id="potvrdit">Potvrdit</button><div id="upozorneni"></div>';
+    menu.innerHTML += '<label>Počet řádků:<span id="radkyText">6</span></label><input type="range" min="4" max="8" value="6" id="radky"><label>Počet sloupců:<span id="sloupceText">6</span></label><input type="range" min="4" max="8" value="6" id="sloupce"><button id="potvrdit">Potvrdit</button><div id="upozorneni"></div>';
     const pridatHrace = document.getElementById('pridatHrace');
     const potvrdit = document.getElementById('potvrdit');
     const hraci = document.getElementById('hraci');
+    const radkyText = document.getElementById('radkyText');
+    const sloupceText = document.getElementById('sloupceText');
     
     pridatHrace.addEventListener('click', function(){
         pocetHracu++;
@@ -24,6 +26,14 @@ local.addEventListener('click', function(){
             hraci.innerHTML += `<label>Jméno hráče č. ${pocetHracu}:</label><input type="text" value="hrac${pocetHracu}" id="hrac${pocetHracu}">`;
         }
     })
+
+    radky.oninput = function() {
+        radkyText.innerHTML = this.value;
+    }
+    sloupce.oninput = function() {
+        sloupceText.innerHTML = this.value;
+    }
+
     potvrdit.addEventListener('click', function(){
         
         let sloupce = document.getElementById('sloupce').value;
@@ -31,13 +41,6 @@ local.addEventListener('click', function(){
         const upozorneni = document.getElementById('upozorneni');
     
         upozorneni.innerText = "";
-    
-        if(sloupce > 8 || sloupce < 4){
-            upozorneni.innerHTML += "Pocet sloupců je mimo interval<br>";
-        }
-        if(radky > 8 || radky < 4){
-            upozorneni.innerHTML += "Pocet řádků je mimo interval<br>";
-        }
         if((radky * sloupce) % 2 != 0){
             upozorneni.innerHTML += "Součin řádků a sloupců musí být sudý.<br>";
         }
@@ -92,9 +95,10 @@ function vytvorHraciPole(velikost) {
             revealed: false
         });
 
-        kartaElement.addEventListener('click', otocKartu); // proč je ve foru add event listener??
         hraciPole.appendChild(kartaElement); // co znamená tohle?
+        kartaElement.addEventListener('click', otocKartu); // proč je ve foru add event listener?? 
     }
+    
 }
 
 function otocKartu(event) {
@@ -102,123 +106,65 @@ function otocKartu(event) {
 
     // Ověření, zda máme platný index
     if (index !== undefined && karty[index] !== undefined) {
-        if (!karty[index].revealed && otoceneKarty.length < 2) {
+        if (!karty[index].revealed) { // && otoceneKarty.length < 2
             // Pokud karta není otočená a zároveň nejsou otočeny dvě karty
             karty[index].revealed = true;
             otoceneKarty.push(karty[index]);
             
+            let prvniIndex = karty.indexOf(otoceneKarty[0]);
+            let druhyIndex = karty.indexOf(otoceneKarty[1]);
+            let prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
+            let druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
+            if(otoceneKarty.length  == 2){
+                console.log(otoceneKarty);
+                overKarty(otoceneKarty[0], otoceneKarty[1], prvniElement, druhyElement);
+                
+            }
+            
+            if (otoceneKarty.length === 3) {
+                prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
+                druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
+                let pom;
+                pom = otoceneKarty[2];
+                otoceneKarty = [];
+                otoceneKarty[0] = pom;
+            }
             // Změna obrázku pouze při kliknutí na logo
             if (event.target.classList.contains('logo')) {
                 event.target.src = karty[index].url;
             }
-
-            if (otoceneKarty.length === 2) {
-                setTimeout(() => {
-                    overKarty();
-                }, 1000);
-            }
+            
         }
     }
 }
 
-function overKarty() {
-    const [prvniKarta, druhaKarta] = otoceneKarty;
-    const prvniIndex = karty.indexOf(prvniKarta);
-    const druhyIndex = karty.indexOf(druhaKarta);
+function overKarty(prvniKarta, druhaKarta, prvniElement, druhyElement) {
+    //const [prvniKarta, druhaKarta] = otoceneKarty;
+    //const prvniIndex = karty.indexOf(prvniKarta);
+    //const druhyIndex = karty.indexOf(druhaKarta);
 
-    const prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
-    const druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
+    //const prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
+    //const druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
 
     if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
-        otoceneKarty = [];
-        prvniElement.classList.add('skryta-karta');
-        druhyElement.classList.add('skryta-karta');
         listHracu[aktualniHrac].pocetBodu++;
         console.log(listHracu);
+        prvniElement.classList.add('skryta-karta');
+        druhyElement.classList.add('skryta-karta');
+        let soucetBodu = 0;
+        for(let i = 0; i < pocetHracu; i++){
+            soucetBodu+=listHracu[i].pocetBodu;
+        }
+        if(soucetBodu == karty.length/2){
+            console.log("Konec hry!");
+        }
     } else {
         prvniKarta.revealed = false;
         druhaKarta.revealed = false;
-        otoceneKarty = [];
         aktualniHrac++;
         if(aktualniHrac === pocetHracu){
             aktualniHrac = 0;
         }
         naTahu.innerText = listHracu[aktualniHrac].name;
-
-        setTimeout(() => {
-            prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
-            druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
-        }, 500);
     }
 }
-
-
-
-// function otocKartu(event) {
-//     const index = event.target.closest('.karta').dataset.index;
-
-//     // Ověření, zda máme platný index
-//     if (index !== undefined && karty[index] !== undefined) {
-//         if (!karty[index].revealed) {
-//             // Pokud karta není otočená a zároveň nejsou otočeny dvě karty
-//             karty[index].revealed = true;
-//             // Změna obrázku pouze při kliknutí na logo
-//             if (event.target.classList.contains('logo')) {
-//                 event.target.src = karty[index].url;
-//             }
-//             otoceneKarty.push(karty[index]);
-//             if (otoceneKarty.length === 2) {
-//                 const [prvniKarta, druhaKarta] = otoceneKarty;
-//                 console.log(karty.indexOf(prvniKarta));
-//                 console.log(karty.indexOf(druhaKarta));
-//                 let prvniIndex = karty.indexOf(prvniKarta);
-//                 let druhyIndex = karty.indexOf(druhaKarta);
-
-//                 let prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
-//                 let druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
-
-//                 if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
-//                     prvniElement.classList.add('skryta-karta');
-//                     druhyElement.classList.add('skryta-karta');
-//                     otoceneKarty = [];
-//                     listHracu[aktualniHrac].pocetBodu++;
-//                 } else {
-//                     aktualniHrac++;
-//                     if(aktualniHrac === pocetHracu){
-//                         aktualniHrac = 0;
-//                     }
-//                 }
-//             }            
-//             if (otoceneKarty.length === 3) {
-//                 otoceneKarty[0].revealed = false;
-//                 otoceneKarty[1].revealed = false;
-//                 document.querySelector(`[data-index="${prvniIndex}"]`).innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
-//                 document.querySelector(`[data-index="${druhyIndex}"]`).innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
-//                 let pom = otoceneKarty[3];
-//                 otoceneKarty = [];
-//                 otoceneKarty.push(pom);
-//             }
-//         }
-//     }
-// }
-
-// function overKarty() {
-//     const [prvniKarta, druhaKarta] = otoceneKarty;
-//     const prvniIndex = karty.indexOf(prvniKarta);
-//     const druhyIndex = karty.indexOf(druhaKarta);
-
-//     let prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
-//     let druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
-
-//     if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
-//         prvniElement.classList.add('skryta-karta');
-//         druhyElement.classList.add('skryta-karta');
-//         otoceneKarty = [];
-//         listHracu[aktualniHrac].pocetBodu++;
-//     } else {
-//         aktualniHrac++;
-//         if(aktualniHrac === pocetHracu){
-//             aktualniHrac = 0;
-//         }
-//     }
-// }
