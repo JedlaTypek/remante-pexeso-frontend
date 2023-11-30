@@ -19,7 +19,7 @@ body{
     width: fit-content;
 }
 
-#menu{
+#menu, #vyhra{
     display: flex;
     flex-direction: column;
     gap: 10px;
