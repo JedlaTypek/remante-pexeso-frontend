@@ -16,6 +16,10 @@ let listHracu = [];
 let pocetHracu = 1;
 let aktualniHrac = 0;
 
+online.addEventListener('click', function(){
+    window.location.href = 'online.html';
+})
+
 local.addEventListener('click', function(){
     menu.innerHTML = '<div id="hraciForm" class="flex-collumn"><label>Jméno hráče č. 1:</label><input type="text" value="hrac1" id="hrac1"></div><button id="pridatHrace">Přidat hráče</button>';
     menu.innerHTML += '<label>Počet řádků:<span id="radkyText">6</span></label><input type="range" min="2" max="8" value="6" id="radky"><label>Počet sloupců:<span id="sloupceText">6</span></label><input type="range" min="2" max="8" value="6" id="sloupce"><button id="potvrdit">Potvrdit</button><div id="upozorneni"></div>';

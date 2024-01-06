@@ -1,5 +1,58 @@
+:root {
+    --akcent: #24c586;
+    --akcent-hover: #1faa75;
+
+    /* --gradient-1: #19875C;
+    --gradient-2: #24C586;
+    --gradient-3: #23A8A5;
+    --gradient-4: #228BC3;
+    --gradient-5: #102980; */
+
+    --gradient-1: #1B9465;
+    --gradient-2: #24C586;
+    --gradient-3: #23a6d5;
+    --gradient-4: #1A68AB;
+    --gradient-5: #102980;
+}  
+
+
 html{
-    background-color: black;
+    background: radial-gradient(var(--gradient-2), var(--gradient-4));
+    background-repeat: no-repeat;
+	animation: otaceni 15s linear infinite;
+    background-size: 200% 200%;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    color: white;
+}
+
+@keyframes otaceni {
+    0% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 body{
@@ -19,20 +72,28 @@ body{
     width: fit-content;
 }
 
+.radek{
+    display: flex;
+    justify-content: space-between;
+}
+
 #menu, #vyhra{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    text-align: center;
     width: fit-content;
     padding: 50px;
     border-radius: 50px;
-    background-color: rgb(255, 255, 255);
-    opacity: 0,5;
+    background-color: rgba(10, 10, 10, 0.7);
 }
 
 #menu button{
-    width: 100%;
+    width: fit-content;
     margin: auto;
+}
+
+.welcomeText{
+    margin-bottom: 50px;
 }
 
 #hlavicka{
@@ -41,7 +102,7 @@ body{
     padding: 20px;
 }
 
-#hraciPole{
+.hraciPole{
     display: grid;
     grid-template-columns: repeat(var(--sloupce), 1fr);
     grid-template-rows: repeat(var(--radky), 1fr);
@@ -50,7 +111,7 @@ body{
     margin: auto;
 }
 
-#hraciPole img{
+.hraciPole img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -87,4 +148,110 @@ body{
 
 label{
     margin-top: 10px;
+}
+
+/* Tlačítka */
+
+button {
+    max-width: fit-content;
+    background-color: var(--akcent); /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    transition: ease-in-out 200ms;
+}
+
+button:hover{
+    background-color: var(--akcent-hover);
+    transform: scale(1.1);
+}
+
+/* ANIMOVANÝ NADPIS PEXESO */
+
+svg {
+    width: 40vw;
+}
+svg path {
+    fill: none;
+    stroke: white;
+    stroke-width: 1px;
+    stroke-dasharray: 600px;
+    stroke-dashoffset: 600px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: draw-stroke 4s linear forwards;
+}
+@keyframes draw-stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+}
+.playerOnMove{
+    color: red;
+}
+
+
+/* TLAČÍTKO */
+
+.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #111;
+    background: #FFF;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    /*background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);*/
+    background: linear-gradient(45deg, var(--gradient-2), var(--gradient-3), var(--gradient-5), var(--gradient-3));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #FFF
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
 }

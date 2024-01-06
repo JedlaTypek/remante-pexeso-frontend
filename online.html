@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Pexeso</title>
+  </head>
+
+  <body>
+    <div id="menu">
+      <div class="flex-collumn">
+        <label>Zadej své jméno:</label>
+        <input type="text" value="hrac1" id="jmenoHrace" />
+        <button id="submitName">potvrdit</button>
+      </div>
+    </div>
+    <div id="gameBoard" class="hraciPole skryte"></div>
+  </body>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="js/online.js" defer></script>
+  <template id="selectionButtons">
+    <button onclick="showCreateLobbyMenu()">vytvořit hru</button
+    ><button onclick="showJoinLobbyMenu()">připojit se ke hře</button>
+  </template>
+
+  <template id="createLobbyMenu">
+    <label>Zde si můžeš nahrát vlastní vzhled obrázků kartiček:</label>
+    <input type="file" id="fileInput" accept="image/*" multiple />
+    <button id="uploadButton">Nahrát obrázky</button>
+    <span id="imagesError"></span>
+    <div id="imageGallery"></div>
+    <label>Zadej maximální počet hráčů</label>
+    <input type="text" value="2" id="maxPlayers" />
+    <label>Počet řádků:<span id="radkyText">6</span></label>
+    <input type="range" min="2" max="8" value="6" id="radky" />
+    <label>Počet sloupců:<span id="sloupceText">6</span> </label>
+    <input type="range" min="2" max="8" value="6" id="sloupce" />
+    <button id="submitLobby" onclick="submitLobby()">potvrdit</button>
+    <span id="lobbyCreateError"></span>
+  </template>
+  <template id="lobby"
+    ><button onclick="gameStart()">start</button>
+    <div>Maximální počet hráčů je: <span class="maxPlayers"></span></div>
+    <div>Velikost hracího pole je: <span class="gameSize"></span></div>
+    <div>Kód hry je: <span class="lobbyCode"></span></div>
+    <div class="listOfPlayers"></div>
+  </template>
+  <template id="lobbyJoin">
+    <label>Zadej kód hry:</label><input type="text" id="lobbyCodeInput" />
+    <button onclick="submitLobbyCode()">potvrdit</button>
+    <span id="lobbyJoinError"></span>
+  </template>
+  <template id="player">
+    <div class="playerName"></div>
+  </template>
+  <template id="game">
+    <div>tvoje jméno je: <span class="yourName"></span></div>
+    <div class="listOfPlayers"></div>
+    <div id="gameDesk" class="hraciPole"></div>
+  </template>
+  <template id="playerList">
+    <div>
+      <span class="playerName"> </span>
+      <span class="playerPoints"> </span>
+    </div>
+  </template>
+  <template id="card">
+    <div class="karta" onclick="turn(this)">
+      <img class="logo" src="img/remante-logo.jpg" alt="karta" />
+    </div>
+  </template>
+</html>
