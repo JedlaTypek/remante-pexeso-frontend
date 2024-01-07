@@ -4,19 +4,6 @@ const submitName = document.getElementById("submitName");
 const selectionButtons = document.getElementById("selectionButtons");
 const createLobbyMenu = document.getElementById("createLobbyMenu");
 const lobby = document.getElementById("lobby");
-const fileInput = document.getElementById("fileInput");
-const uploadButton = document.getElementById("uploadButton");
-const imageGallery = document.getElementById("imageGallery");
-
-uploadButton.addEventListener("click", () => {
-  const maxImages = 5; // Maximální povolený počet obrázků
-  if (fileInput.files.length > maxImages) {
-    imagesError.innerText = "nahráli jste více obrázků, než je možné, zkuste to znovu"
-  }
-  else{
-  const files = fileInput.files;
-  }
-});
 
 submitName.addEventListener("click", () => {
   const jmeno = document.getElementById("jmenoHrace").value;
@@ -140,6 +127,7 @@ socket.on("hraZacala", (gameInfo) => {
   menu.classList.add("skryte");
   const gameTemplate = game.content.cloneNode(true);
   gameBoard.classList.remove("skryte");
+  gameBoard.classList.remove("hraciPole");
   gameBoard.appendChild(gameTemplate);
   const sloupce = gameInfo.collumns;
   const radky = gameInfo.gameDesk / gameInfo;
@@ -192,6 +180,10 @@ socket.on("hideCards", (card1, card2) => {
 });
 
 socket.on("turnBack", (card) => {
-  document.querySelector(`[data-index="${card}"] img`).src =
-    "img/remante-logo.jpg";
+  document.querySelector(`[data-index="${card}"] img`).src = "img/remante-logo.jpg";
+});
+
+socket.on("playerListChange", (players, playerOnMove) => {
+  console.log(players, playerOnMove);
+  updatePlayerList(players, playerOnMove);
 });
