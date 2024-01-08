@@ -15,53 +15,54 @@ const vyherce = document.getElementById('vyherce');
 let listHracu = [];
 let pocetHracu = 1;
 let aktualniHrac = 0;
+let sloupce = 0;
+let radky = 0;
+  
+  function addPlayer() {
+    pocetHracu++;
+    const template = document.getElementById("player");
+    const newPlayer = template.content.cloneNode(true);
+    const inputId = newPlayer.getElementById("inputId")
+    inputId.id = `hrac${pocetHracu}`;
+    pridanaTlacitka.appendChild(newPlayer);
+  }
+  
+  function c4xr4function() {
+    c4xr4.classList.add("selected");
+    c6xr6.classList.remove("selected");
+    c8xr8.classList.remove("selected");
+    sloupce = 4;
+    radky = 4;
+  }
+  
+  function c6xr6function() {
+    c4xr4.classList.remove("selected");
+    c6xr6.classList.add("selected");
+    c8xr8.classList.remove("selected");
+    sloupce = 6;
+    radky = 6;
+  }
+  
+  function c8xr8function() {
+    c4xr4.classList.remove("selected");
+    c6xr6.classList.remove("selected");
+    c8xr8.classList.add("selected");
+    sloupce = 8;
+    radky = 8;
+  }
 
-online.addEventListener('click', function(){
-    window.location.href = 'online.html';
-})
 
-local.addEventListener('click', function(){
-    menu.innerHTML = '<div id="hraciForm" class="flex-collumn"><label>Jméno hráče č. 1:</label><input type="text" value="hrac1" id="hrac1"></div><button id="pridatHrace">Přidat hráče</button>';
-    menu.innerHTML += '<label>Počet řádků:<span id="radkyText">6</span></label><input type="range" min="2" max="8" value="6" id="radky"><label>Počet sloupců:<span id="sloupceText">6</span></label><input type="range" min="2" max="8" value="6" id="sloupce"><button id="potvrdit">Potvrdit</button><div id="upozorneni"></div>';
-    const pridatHrace = document.getElementById('pridatHrace');
-    const potvrdit = document.getElementById('potvrdit');
-    const hraciForm = document.getElementById('hraciForm');
-    const radkyText = document.getElementById('radkyText');
-    const sloupceText = document.getElementById('sloupceText');
-    
-    pridatHrace.addEventListener('click', function(){
-        pocetHracu++;
-        if(pocetHracu <= 5){
-            hraciForm.innerHTML += `<label>Jméno hráče č. ${pocetHracu}:</label><input type="text" value="hrac${pocetHracu}" id="hrac${pocetHracu}">`;
-        }
-    })
-
-    radky.oninput = function() {
-        radkyText.innerHTML = this.value;
-    }
-    sloupce.oninput = function() {
-        sloupceText.innerHTML = this.value;
-    }
-
-    potvrdit.addEventListener('click', function(){
-        
-        let sloupce = document.getElementById('sloupce').value;
-        let radky = document.getElementById('radky').value;
-        const upozorneni = document.getElementById('upozorneni');
-    
-        upozorneni.innerText = "";
-        if((radky * sloupce) % 2 != 0){
-            upozorneni.innerHTML += "Součin řádků a sloupců musí být sudý.<br>";
-        }
-        
-        if(!((radky * sloupce) % 2 != 0)){
+    function start(){   
             for(let i = 0; i < pocetHracu; i++){
                 listHracu.push({
                     id: i,
-                    name: document.getElementById('hrac'+(i+1)).value,
+                    name: document.getElementById(`hrac${i+1}`).value,
                     pocetBodu: 0
                 });
             }
+            const gameStartTemp = gameStart.content.cloneNode(true);
+            menu.innerHTML ="";
+            menu.appendChild(gameStartTemp);
             naTahu.innerText = listHracu[aktualniHrac].name;
             menu.classList.add('skryte');
             hra.classList.remove('skryte');
@@ -69,11 +70,14 @@ local.addEventListener('click', function(){
             hraciPole.style.setProperty('--radky', radky);
             vytvorHraciPole(radky * sloupce);
         }   
-    })
-    if(pocetHracu > 1){
-        seznamHracu.classList.remove('skryte');
-    }
-})
+    
+
+
+function removeGrandParent(element) {
+const grandparentElement = element.parentElement.parentElement;
+grandparentElement.remove();
+pocetHracu--;
+}
 
 function picsum(velikost) {
     let obrazky = [];

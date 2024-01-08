@@ -184,6 +184,11 @@ socket.on("turnBack", (card) => {
 });
 
 socket.on("playerListChange", (players, playerOnMove) => {
-  console.log(players, playerOnMove);
   updatePlayerList(players, playerOnMove);
 });
+
+socket.on("end", (players, winners) => {
+  gameDesk.remove();
+  updatePlayerList(players, null);
+  
+})
