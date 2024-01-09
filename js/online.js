@@ -1,9 +1,11 @@
-const socket = io("http://138.2.144.241:3006");
+const socket = io("http://pexeso.lol:3006");
 const menu = document.getElementById("menu");
 const submitName = document.getElementById("submitName");
 const selectionButtons = document.getElementById("selectionButtons");
 const createLobbyMenu = document.getElementById("createLobbyMenu");
 const lobby = document.getElementById("lobby");
+let radky = 0;
+let sloupce = 0;
 
 submitName.addEventListener("click", () => {
   const jmeno = document.getElementById("jmenoHrace").value;
@@ -61,7 +63,7 @@ function createLobby(lobbyData) {
 
 async function submitLobbyCode() {
   const lobbyCode = document.getElementById("lobbyCodeInput").value;
-  const response = await fetch("http://138.2.144.241:3006/lobbyJoin", {
+  const response = await fetch("http://pexeso.lol:3006/lobbyJoin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // nastavení hlavičky pro řízení typu obsahu
@@ -85,16 +87,38 @@ async function submitLobbyCode() {
   createLobby(data);
 }
 
+function c4xr4function() {
+  c4xr4.classList.add("selected");
+  c6xr6.classList.remove("selected");
+  c8xr8.classList.remove("selected");
+  sloupce = 4;
+  radky = 4;
+}
+
+function c6xr6function() {
+  c4xr4.classList.remove("selected");
+  c6xr6.classList.add("selected");
+  c8xr8.classList.remove("selected");
+  sloupce = 6;
+  radky = 6;
+}
+
+function c8xr8function() {
+  c4xr4.classList.remove("selected");
+  c6xr6.classList.remove("selected");
+  c8xr8.classList.add("selected");
+  sloupce = 8;
+  radky = 8;
+}
+
 async function submitLobby() {
   const maxPlayers = document.getElementById("maxPlayers").value;
-  const radky = document.getElementById("radky").value;
-  const sloupce = document.getElementById("sloupce").value;
   if ((radky * sloupce) % 2 != 0) {
     document.getElementById("lobbyCreateError").innerText =
       "Musí být dělitelné dvěma";
     return;
   }
-  const response = await fetch("http://138.2.144.241:3006/lobby", {
+  const response = await fetch("http://pexeso.lol:3006/lobby", {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // nastavení hlavičky pro řízení typu obsahu
@@ -111,7 +135,7 @@ async function submitLobby() {
 }
 
 async function gameStart() {
-  const response = await fetch("http://138.2.144.241:3006/gameStart", {
+  const response = await fetch("http://pexeso.lol:3006/gameStart", {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // nastavení hlavičky pro řízení typu obsahu
