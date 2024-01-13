@@ -5,9 +5,18 @@ const createLobbyMenu = document.getElementById("createLobbyMenu");
 const lobby = document.getElementById("lobby");
 let radky = 6;
 let sloupce = 6;
+let sada = "";
 
 function backFromOnline(){
   window.location.href = 'index.html';
+}
+
+function backFromGameEnd(){
+  const clone = selectionButtons.content.cloneNode(true);
+  menu.innerHTML = "";
+  menu.appendChild(clone);
+  menu.classList.remove('skryte');
+  gameBoard.remove();
 }
 
 function backToSelectionButtons(){
@@ -15,15 +24,16 @@ function backToSelectionButtons(){
   menu.innerHTML = "";
   menu.appendChild(clone);
 }
+
 function submitName() {
   const jmeno = document.getElementById("jmenoHrace").value;
-  if(jmeno != ""){
+  if(jmeno != "" && jmeno.length <= 15){
     socket.emit("jmenoHrace", jmeno);
     const clone = selectionButtons.content.cloneNode(true);
     menu.innerHTML = "";
     menu.appendChild(clone);
   } else{
-    chyba.innerText = "Jméno nesmí být prázdné.";
+    chyba.innerText = "Jméno nesmí být prázdné ani delší než 15 znaků.";
   }
 };
 
@@ -37,6 +47,12 @@ function showJoinLobbyMenu() {
   const clone = lobbyJoin.content.cloneNode(true);
   menu.innerHTML = "";
   menu.appendChild(clone);
+}
+
+function vybratSadu(sadaInput, sadaText){
+  sada = sadaInput;
+  popup.classList.remove('active');
+  ukazPopupText.innerHTML = sadaText;
 }
 
 function createLobby(lobbyData) {
@@ -95,6 +111,11 @@ async function submitLobbyCode() {
     lobbyJoinError.innerText = "Hra je již plná";
     return;
   }
+  if (response.status == 402) {
+    const lobbyJoinError = document.getElementById("lobbyJoinError");
+    lobbyJoinError.innerText = "Hra již začala.";
+    return;
+  }
   const data = await response.json();
   createLobby(data);
 }
@@ -125,9 +146,8 @@ function c8xr8function() {
 
 async function submitLobby() {
   const maxPlayers = document.getElementById("maxPlayers").value;
-  if ((radky * sloupce) % 2 != 0) {
-    document.getElementById("lobbyCreateError").innerText =
-      "Musí být dělitelné dvěma";
+  if(sada === "") {
+    document.getElementById("lobbyCreateError").innerText = "Musíš si vybrat sadu.";
     return;
   }
   const response = await fetch("http://pexeso.lol:3006/lobby", {
@@ -139,6 +159,7 @@ async function submitLobby() {
       maxPlayers: maxPlayers,
       width: sloupce,
       height: radky,
+      sada: sada,
       socketId: socket.id,
     }),
   });
@@ -206,21 +227,27 @@ function turn(element) {
 }
 
 socket.on("cardUrl", ({ id, url }) => {
-  const card = document.querySelector(`[data-index="${id}"] img`);
-  card.src = url;
+  const card = document.querySelector(`[data-index="${id}"]`);
+  card.classList.add('otocena-karta');
+  const cardImg = document.querySelector(`[data-index="${id}"] img`);
+  cardImg.src = url;
 });
 
-socket.on("hideCards", (card1, card2) => {
-  document
-    .querySelector(`[data-index="${card1}"]`)
-    .classList.add("skryta-karta");
-  document
-    .querySelector(`[data-index="${card2}"]`)
-    .classList.add("skryta-karta");
+socket.on("hideCards", (card1id, card2id) => {
+  card1 = document.querySelector(`[data-index="${card1id}"]`);
+  card1.classList.add("skryta-karta");
+  card1.classList.remove("otocena-karta");
+  card2 = document.querySelector(`[data-index="${card2id}"]`);
+  card2.classList.add("skryta-karta");
+  card2.classList.remove("otocena-karta");
 });
 
-socket.on("turnBack", (card) => {
-  document.querySelector(`[data-index="${card}"] img`).src = "img/remante-logo.jpg";
+socket.on("turnBack", (cardId) => {
+  card = document.querySelector(`[data-index="${cardId}"]`);
+  card.classList.remove('otocena-karta');
+  const cardImg = document.querySelector(`[data-index="${cardId}"] img`)
+  cardImg.src = "img/remante-logo.jpg";
+  
 });
 
 socket.on("playerListChange", (players, playerOnMove) => {
@@ -230,9 +257,8 @@ socket.on("playerListChange", (players, playerOnMove) => {
 socket.on("end", (players, winners) => {
   gameDesk.remove();
   updatePlayerList(players, null);
-  console.log("konec hry");
-  const clone = houseButton.content.cloneNode(true);
-  info.innerHTML += 
-  info.appendChild(clone);
-  
+  const houseButtonTemplate = houseButton.content.cloneNode(true);
+  backButtons.appendChild(houseButtonTemplate);
+  const clone = backToOnlineMenu.content.cloneNode(true);
+  backButtons.appendChild(clone);
 })

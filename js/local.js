@@ -14,6 +14,7 @@ let pocetHracu = 1;
 let aktualniHrac = 0;
 let sloupce = 6;
 let radky = 6;
+let sada = "";
 
 function backFromLocal() {
     window.location.href = 'index.html';
@@ -54,9 +55,18 @@ function c8xr8function() {
     radky = 8;
 }
 
+function vybratSadu(sadaInput){
+    sada = sadaInput;
+    console.log(sada);
+    popup.classList.remove('active');
+}
 
 function start() {
     listHracu = [];
+    if(sada === ""){
+        startError.innerText = "Vyber si nejdřív sadu.";
+        return;
+    }
     for (let i = 0; i < pocetHracu; i++) {
         if(document.getElementById(`hrac${i + 1}`).value === ""){
             startError.innerText = "Jméno hráče nesmí být prázdné.";
@@ -74,7 +84,7 @@ function start() {
     const hraciPole = document.getElementById("hraciPole");
     hraciPole.style.setProperty('--sloupce', sloupce);
     hraciPole.style.setProperty('--radky', radky);
-    vytvorHraciPole(radky * sloupce);
+    vytvorHraciPole(radky * sloupce, sada);
     vypisHrace(listHracu, aktualniHrac);
 }
 
@@ -96,7 +106,7 @@ function picsum(velikost) {
     return obrazky;
 }
 
-function sada(velikost, sada){
+function hraciPoleSada(velikost, sada){
     let obrazky = []
     for (let i = 0; i < velikost / 2; i++) {
         obrazky.push(`img/sady/${sada}/${i+1}.webp`);
@@ -104,8 +114,8 @@ function sada(velikost, sada){
     return obrazky;
 }
 
-function vytvorHraciPole(velikost) {
-    const vsechnyKarty = picsum(velikost);
+function vytvorHraciPole(velikost, sada) {
+    const vsechnyKarty = hraciPoleSada(velikost, sada);
     const obrazky = vsechnyKarty.concat(vsechnyKarty); // Každý obrázek pouze jednou
 
     const shuffle = (array) => array.sort(() => Math.random() - 0.5); // funkce na přeházení prvků v poli

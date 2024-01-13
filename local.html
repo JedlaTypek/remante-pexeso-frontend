@@ -19,6 +19,7 @@
         <button id="pridatHrace" class="tlacitko kulate" onclick="addPlayer()"><img src="svg/plus-solid.svg"></button> 
         <button id="odebratHrace" class="tlacitko kulate red skryte" onclick="removePlayer()"><img src="svg/minus-solid.svg"></button>
       </div>
+      <button id="ukazPopup" onclick="ukazPopup()" class="tlacitko">Vybrat sadu</button>
       <div>Zvolte rozložení:</div>
       <div class="radek rozlozeni">
         <button id="c4xr4" onclick="c4xr4function()" class="tlacitko">4x4</button>
@@ -27,9 +28,13 @@
       </div>
       <button id="potvrdit" class="tlacitko glow-on-hover" onclick="start()">start</button>
       <div id="startError"></div>
-      </div>
+    </div>
+    <div id="popup" class="popup-container">
+      <div id="popupContent" class="popup-box"></div>
+  </div>
   </body>
   <script src="js/local.js" defer></script>
+  <script src="js/vyber-sady.js" defer></script>
   <template id="player">
       <input id="inputId"type="text" />
   </template>
@@ -48,5 +53,18 @@
       <span class="playerPoints"> </span>
     </div>
   </template>
+  <template id="vyberSadTemplate">
+    <h2>Sady:</h2>
+    <button onclick="cervenaAuta()" class="tlacitko">Červená auta</button>
+    <button onclick="ford()" class="tlacitko">Ford</button>
+    <button onclick="skoda()" class="tlacitko">Škoda</button>
+    <button onclick="autodily()" class="tlacitko">Autodíly</button>
+</template>
+<template id="galleryTemplate">
+    <button onclick="ukazVyberSad()" class="tlacitko back"><img src="svg/left-long-solid.svg"></button>
+    <h2 id="nadpis"></h2>
+    <div id="gallery" class="hraciPole nahled"></div>
+    <button id="vybratSaduButton" class="tlacitko">Vybrat sadu</button>
+</template>
 </html>
 

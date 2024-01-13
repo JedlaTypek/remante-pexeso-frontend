@@ -7,6 +7,8 @@
     --gradient-3: #23a6d5;
     --gradient-4: #1A68AB;
     --gradient-5: #102980;
+
+    font-size: 18px;
 }  
 
 html{
@@ -32,6 +34,9 @@ html{
     }
     html{
         background-size: 400% 400%!important;
+    } .celaObrazovka{
+        margin-top: 30px!important;
+        margin-bottom: 30px!important;
     }
 }
 
@@ -70,7 +75,7 @@ html{
 }
 
 .celaObrazovka{
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,7 +88,8 @@ html{
 .flex-collumn{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
 }
 
 .radek{
@@ -108,7 +114,8 @@ html{
     align-items: center;
     width: fit-content;
     min-width: 100px;
-    padding: 50px;
+    max-width: 90%;
+    padding: 30px;
     border-radius: 50px;
     background-color: rgba(10, 10, 10, 0.7);
 }
@@ -147,14 +154,21 @@ html{
     aspect-ratio: 1;
 }
 
-.hraciPole img{
+.nahled{
+    --sloupce: 6;
+    --radky: 6;
+    max-height: 60vh;
+}
+
+.karta img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     aspect-ratio: 1 / 1;
 }
 
 .karta{
+    background-color: white;
     overflow: hidden;
     border-radius: 15% 85% 15% 85% / 85% 15% 85% 15% ;
     box-shadow: 0px 0px 3px 5px rgba(19,21,20,0.5);
@@ -162,6 +176,22 @@ html{
     -moz-box-shadow: 0px 0px 3px 5px rgba(19,21,20,0.5);
     transition: ease-in-out 200ms;
     cursor: pointer;
+}
+
+.karta:hover{
+    transform: scale(1.05);
+    box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
+    -webkit-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
+    -moz-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
+}
+
+.otocena-karta{
+    z-index: 5;
+}
+
+.otocena-karta:hover{
+    z-index: 6;
+    transform: scale(2);
 }
 
 .skryte{
@@ -173,19 +203,24 @@ html{
     pointer-events: none;
 }
 
-.karta:hover{
-    transform: scale(1.05);
-    box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
-    -webkit-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
-    -moz-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
+.gallery-item{
+    background-color: white;
+    overflow: hidden;
+    border-radius: 15% 85% 15% 85% / 85% 15% 85% 15% ;
+}
+
+.gallery-item img{
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+
 }
 
 .back{
-    position: absolute;
+    margin:auto;
     color: white;
     padding: 10px!important;
-    top: 25px;
-    left: 25px;
     border-radius: 50px !important;
     aspect-ratio: 1/1;
 }
@@ -209,39 +244,6 @@ html{
 
 label{
     margin-top: 10px;
-}
-
-.buttonIn {
-    width: 300px;
-    position: relative;
-    margin-top: 10px;
-    padding-right: 20px;
-}
-
-input {
-    width: 100%;
-    margin: 0px;
-    padding: 15px;
-    outline: none;
-    border-radius: 50px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-.uvnitr {
-    position: absolute;
-    height: 40px;
-    aspect-ratio: 1;
-    padding: 0;
-    top: 7px;
-    border-radius: 50px;
-    right: 5px;
-    z-index: 2;
-    border: none;
-    cursor: pointer;
-    color: white;
-    background-color: #1e90ff;
-    transform: translateX(2px);
 }
 
 .selected{
@@ -268,6 +270,44 @@ input {
 .tlacitko:hover{
     background-color: var(--akcent-hover);
     transform: scale(1.1);
+}
+
+.buttonIn {
+    width: 300px;
+    position: relative;
+    margin-top: 20px;
+}
+
+input {
+    width: 100%;
+    margin: 0px;
+    padding: 15px;
+    outline: none;
+    border-radius: 50px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.uvnitr {
+    position: absolute;
+    aspect-ratio: 1;
+    padding: 12px;
+    top: 5px;
+    border-radius: 50px;
+    right: 5px;
+    z-index: 2;
+    border: none;
+    cursor: pointer;
+    transform: translateX(2px);
+    
+}
+
+#jmenoHrace{
+    margin-bottom: unset;
+}
+
+.uvnitr:hover{
+    transform: translateX(2px);
 }
 
 /* ANIMOVANÝ NADPIS PEXESO */
@@ -329,13 +369,19 @@ input {
     width: 100%;
 }
 
+#potvrdit, .margin-t-20{
+    margin-top: 20px!important;
+}
+
+.margin-b-10{
+    margin-bottom: 10px;
+}
 
 /* TLAČÍTKO */
 
 .glow-on-hover {
     margin:auto;
-    margin-top:20px;
-    width: 220px;
+    width: fit-content;
     height: 50px;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -396,11 +442,6 @@ input {
     100% { background-position: 0 0; }
 }
 
-
-.winner{
-    color: goldenrod !important;
-}
-
 /* LEADERBOARDS */
 .row {
     align-self: center;
@@ -410,7 +451,10 @@ input {
     gap: 20px;
   }
 .column {
-    flex: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 33%
 }
   
 @media screen and (max-width: 768px) {
@@ -420,11 +464,10 @@ input {
 }
 
 #pointsEarned, #wins, #gamesPlayed {
+    width: fit-content;
     padding-left: 25px;
     
-    li{
-        font-size: 18px;
-    }
+    
     li:first-child{
         color: goldenrod;
         font-size: 24px;
@@ -443,96 +486,69 @@ input {
     }
 }
 
-/* vyber sady */
-
-.vodiapicker{
-    display: none; 
+.show-popup {
+    padding: 18px 40px;
+    background: #6e78ff;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 18px;
+    color: #f2f2f2;
+    font-weight: 500;
   }
-  
-  #a{
-    padding-left: 0px;
-    margin: 0px;
-  }
-  
-  #a img, .btn-select img{
-    height: 70px;
-    width: auto;
-  }
-  
-  #a li{
-    display: flex;
-    align-items: center;
-    list-style: none;
-    padding: 10px;
-  }
-  
-  #a li:hover{
-   background-color: #F4F3F3;
-  }
-  
-  #a li img{
-    margin-bottom: 0px;
-    border-radius: 5px;
-  }
-  
-  #a li span, .btn-select li span{
-    margin-left: 30px;
-  }
-  
-  /* item list */
-  
-  .dropdown{
-    display: none;
+  .popup-container {
+    position: absolute;
     width: 100%;
-    max-width: 350px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 10px;
-    
-  }
-  
-  .open{
-    display: show !important;
-  }
-  
-  .btn-select{
-    margin-top: 10px;
-    width: 100%;
-    max-width: 350px;
-    height: 80px;
-    border-radius: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-   
-  }
-  .btn-select li{
+    height: 100%;
+    background: rgba(0, 0, 0, .3);
     display: flex;
+    justify-content: center;
     align-items: center;
-    list-style: none;
-    padding-bottom: 0px;
+    opacity: 0;
+    pointer-events: none;
   }
-
-  .btn-select li img{
-    border-radius: 5px;
+  .popup-container.active {
+    opacity: 1;
+    pointer-events: auto;
+    transition: .4s ease;
   }
-  
-  .btn-select:hover li{
-    margin-left: 0px;
+  .popup-container .popup-box {
+    background: #f2f2f2;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    padding: 30px;
+    transform: scale(0);
+    align-items: center;
   }
-  
-  .btn-select:hover{
-    background-color: #F4F3F3;
-    border: 1px solid transparent;
-    box-shadow: inset 0 0px 0px 1px #ccc;
-    
-    
+  .popup-container.active .popup-box {
+    transform: scale(1);
+    transition: .4s ease;
+    transition-delay: .25s;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
   }
-  
-  .btn-select:focus{
-     outline:none;
+  .popup-box h2 {
+    color: #333;
+    line-height: 1;
+    text-align: center;
   }
-  
-  .sady-select{
-    margin-left: 50px;
+  .popup-box p {
+    color: #333;
+    margin: 12px 0 20px;
   }
-  
+  .popup-box .close-btn {
+    width: 100%;
+    padding: 15px;
+    background: #6e78ff;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 18px;
+    color: #f2f2f2;
+    font-weight: 500;
+  }

@@ -1,37 +1,40 @@
-// Vytvoření pole pro ukládání prvků
-var sady = [];
+function ukazPopup() {
+  ukazVyberSad();
+  popup.classList.add('active');
+}
 
-var vodiapickerOptions = document.querySelectorAll('.vodiapicker option');
-const tlacitko = document.querySelector('.btn-select')
-const dropdown = document.querySelector(".dropdown")
+function ukazVyberSad(){
+  const template = vyberSadTemplate.content.cloneNode(true);
+  popupContent.innerHTML = "";
+  popupContent.appendChild(template);
+}
 
-// Procházení všech prvků <option>
-vodiapickerOptions.forEach(function(option) {
-  const img = option.getAttribute("data-thumbnail");
-  const text = option.innerText;
-  const value = option.value;
-  const item = '<li><img src="'+ img +'" alt="" value="'+ value +'"/><span>'+ text +'</span></li>';
-  sady.push(item);
-});
+function cervenaAuta(){
+  vykresliPopup("Červená auta", "cervena-auta");
+}
 
-// vložení obsahu pole sloučeného do jednoho stringu do elementu s id "a"
-document.getElementById('a').innerHTML = sady.join('');
+function ford(){
+  vykresliPopup("Ford", "ford");
+}
 
-// Funkce pro změnu tlačítka po kliknutí na prvek seznamu
-var aListItems = document.querySelectorAll('#a li');
-aListItems.forEach(function(item) {
-  item.addEventListener('click', function() {
-    var img = this.querySelector('img').getAttribute("src");
-    var value = this.querySelector('img').getAttribute('value');
-    var text = this.innerText;
-    var newItem = '<li><img src="'+ img +'" alt="" /><span>'+ text +'</span></li>';
-    tlacitko.innerHTML = newItem;
-    tlacitko.setAttribute('value', value);
-    dropdown.style.display = "none";
-  });
-});
+function skoda(){
+  vykresliPopup("Škoda", "skoda");
+}
 
-// Funkce pro zobrazení/skrytí seznamu po kliknutí na tlačítko
-tlacitko.addEventListener('click', function() {
-  dropdown.style.display = (dropdown.style.display === "none") ? "block" : "none";
-});
+function autodily(){
+  vykresliPopup("Autodíly", "autodily");
+}
+
+function vykresliPopup(nadpisText, sada){
+  const template = galleryTemplate.content.cloneNode(true);
+  popupContent.innerHTML = "";
+  popupContent.appendChild(template);
+  nadpis.innerText = nadpisText;
+  vybratSaduButton.setAttribute("onclick", `vybratSadu("${sada}", "${nadpisText}")`);
+  for(let i = 0; i < 32; i++){
+    const galleryItem = document.createElement('div');
+    galleryItem.classList.add('gallery-item');
+    galleryItem.innerHTML = `<img class="logo" src="img/sady/${sada}/${i+1}.webp">`;
+    gallery.appendChild(galleryItem);
+  }
+}

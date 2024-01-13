@@ -11,48 +11,41 @@
 
   <body class="celaObrazovka">
     <div id="menu">
-      <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
-      <div class="flex-collumn">
-        <label>Zadej své jméno:</label>
-        <input type="text" value="hrac1" id="jmenoHrace" />
-        <button onclick="submitName()" class="tlacitko">potvrdit</button>
-        <div id="chyba"></div>
+      <button onclick="backFromOnline()" class="tlacitko back center"><img src="svg/house-solid.svg"></i></button>
+      <div class="buttonIn">
+        <input type="text" id="jmenoHrace" placeholder="Zadej své jméno"/>
+        <button onclick="submitName()" class="tlacitko uvnitr"><img src="svg/right-long-solid.svg"></button>
       </div>
+      <div id="chyba"></div>
     </div>
     <div id="gameBoard" class="hraciPole skryte"></div>
+    <div id="popup" class="popup-container">
+      <div id="popupContent" class="popup-box"></div>
+    </div>
   </body>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="js/online.js" defer></script>
   <script src="js/vyber-sady.js" defer></script>
   <template id="selectionButtons">
-    <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
-    <button onclick="showCreateLobbyMenu()" class="tlacitko">vytvořit hru</button>
-    <br>
-    <button onclick="showJoinLobbyMenu()" class="tlacitko">připojit se ke hře</button>
+    <div class="flex-collumn">
+      <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
+      <button onclick="showCreateLobbyMenu()" class="tlacitko">vytvořit hru</button>
+      <button onclick="showJoinLobbyMenu()" class="tlacitko">připojit se ke hře</button>
+    </div>
   </template>
 
   <template id="createLobbyMenu">
     <button onclick="backToSelectionButtons()" class="tlacitko back"><img src="svg/left-long-solid.svg"></i></button>
     <label>Zadej maximální počet hráčů</label>
     <input type="text" value="2" id="maxPlayers" />
-    <select class="vodiapicker">
-      <option value="sada1" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">1. sada</option>
-      <option value="sada2" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">English</option>
-      <option value="sada3" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">English</option>
-    </select>
-    <div class="sady-select">
-    <button class="btn-select" value="">Vyberte sadu</button>
-    <div class="dropdown" style="display:none">
-    <ul id="a"></ul>
-    </div>
-    </div>
-    <div>Zvolte rozložení:</div>
+    <button id="ukazPopupText" onclick="ukazPopup()" class="tlacitko">Vybrat sadu</button>
+    <div class="margin-t-20 margin-b-10">Zvolte rozložení:</div>
     <div class="radek">
       <button id="c4xr4" onclick="c4xr4function()" class="tlacitko">4x4</button>
       <button id="c6xr6" onclick="c6xr6function()" class="tlacitko selected">6x6</button>
       <button id="c8xr8" onclick="c8xr8function()" class="tlacitko">8x8</button>
     </div>
-    <button id="submitLobby" onclick="submitLobby()" class="tlacitko">potvrdit</button>
+    <button id="submitLobby" onclick="submitLobby()" class="glow-on-hover margin-t-20">potvrdit</button>
     <span id="lobbyCreateError"></span>
   </template>
   <template id="lobby">
@@ -64,16 +57,20 @@
     <div id="startAlert"></div>
   </template>
   <template id="lobbyJoin">
-    <button onclick="backToSelectionButtons()" class="tlacitko back"><img src="svg/left-long-solid.svg"></i></button>
+    <button onclick="backToSelectionButtons()" class="tlacitko back"><img src="svg/left-long-solid.svg"></button>
     <label>Zadej kód hry:</label><input type="text" id="lobbyCodeInput" />
     <button onclick="submitLobbyCode()" class="tlacitko">potvrdit</button>
     <span id="lobbyJoinError"></span>
+  </template>
+  <template id="backToOnlineMenu">
+    <button onclick="backFromGameEnd()" class="tlacitko back"><img src="svg/left-long-solid.svg"></button>
   </template>
   <template id="player">
     <div class="playerName"></div>
   </template>
   <template id="game">
     <div id="info">
+      <div id="backButtons"></div>
       <div>Tvoje jméno je: <span class="yourName"></span></div>
       <div class="listOfPlayers"></div>
     </div>
@@ -96,4 +93,17 @@
   <template id="houseButton">
     <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
   </template>
+  <template id="vyberSadTemplate">
+    <h2>Sady:</h2>
+    <button onclick="cervenaAuta()" class="tlacitko">Červená auta</button>
+    <button onclick="ford()" class="tlacitko">Ford</button>
+    <button onclick="skoda()" class="tlacitko">Škoda</button>
+    <button onclick="autodily()" class="tlacitko">Autodíly</button>
+</template>
+<template id="galleryTemplate">
+    <button onclick="ukazVyberSad()" class="tlacitko back"><img src="svg/left-long-solid.svg"></button>
+    <h2 id="nadpis"></h2>
+    <div id="gallery" class="hraciPole nahled"></div>
+    <button id="vybratSaduButton" class="tlacitko">Vybrat sadu</button>
+</template>
 </html>
