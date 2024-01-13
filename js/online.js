@@ -1,19 +1,31 @@
 const socket = io("http://pexeso.lol:3006");
 const menu = document.getElementById("menu");
-const submitName = document.getElementById("submitName");
 const selectionButtons = document.getElementById("selectionButtons");
 const createLobbyMenu = document.getElementById("createLobbyMenu");
 const lobby = document.getElementById("lobby");
-let radky = 0;
-let sloupce = 0;
+let radky = 6;
+let sloupce = 6;
 
-submitName.addEventListener("click", () => {
-  const jmeno = document.getElementById("jmenoHrace").value;
-  socket.emit("jmenoHrace", jmeno);
+function backFromOnline(){
+  window.location.href = 'index.html';
+}
+
+function backToSelectionButtons(){
   const clone = selectionButtons.content.cloneNode(true);
   menu.innerHTML = "";
   menu.appendChild(clone);
-});
+}
+function submitName() {
+  const jmeno = document.getElementById("jmenoHrace").value;
+  if(jmeno != ""){
+    socket.emit("jmenoHrace", jmeno);
+    const clone = selectionButtons.content.cloneNode(true);
+    menu.innerHTML = "";
+    menu.appendChild(clone);
+  } else{
+    chyba.innerText = "Jméno nesmí být prázdné.";
+  }
+};
 
 function showCreateLobbyMenu() {
   const clone = createLobbyMenu.content.cloneNode(true);
@@ -146,6 +158,10 @@ async function gameStart() {
   });
 }
 
+socket.on("notEnoughPlayers", () =>{
+  startAlert.innerText = "Pro spuštění hry je potřeba alespoň dva hráče.";
+});
+
 socket.on("hraZacala", (gameInfo) => {
   menu.innerHTML = "";
   menu.classList.add("skryte");
@@ -214,5 +230,9 @@ socket.on("playerListChange", (players, playerOnMove) => {
 socket.on("end", (players, winners) => {
   gameDesk.remove();
   updatePlayerList(players, null);
+  console.log("konec hry");
+  const clone = houseButton.content.cloneNode(true);
+  info.innerHTML += 
+  info.appendChild(clone);
   
 })

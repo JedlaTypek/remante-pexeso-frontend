@@ -2,12 +2,6 @@
     --akcent: #24c586;
     --akcent-hover: #1faa75;
 
-    /* --gradient-1: #19875C;
-    --gradient-2: #24C586;
-    --gradient-3: #23A8A5;
-    --gradient-4: #228BC3;
-    --gradient-5: #102980; */
-
     --gradient-1: #1B9465;
     --gradient-2: #24C586;
     --gradient-3: #23a6d5;
@@ -15,49 +9,6 @@
     --gradient-5: #102980;
 }  
 
-.buttonIn {
-    width: 300px;
-    position: relative;
-    margin-top: 10px;
-    padding-right: 20px;
-}
-
-input {
-    width: 100%;
-    margin: 0px;
-    padding: 10px;
-    outline: none;
-    height: 30px;
-    border-radius: 50px;
-}
-
-.uvnitr {
-    position: absolute;
-    height: 40px;
-    aspect-ratio: 1;
-    padding: 0;
-    top: 7px;
-    border-radius: 50px;
-    right: 5px;
-    z-index: 2;
-    border: none;
-    cursor: pointer;
-    color: white;
-    background-color: #1e90ff;
-    transform: translateX(2px);
-}
-
-.uvnitr:hover {
-    background-color: red;
-}
-
-.red{
-    background-color: red;
-}
-
-#addButton{
-    margin-top: 30px;
-}
 html{
     background: radial-gradient(var(--gradient-2), var(--gradient-4));
     background-repeat: no-repeat;
@@ -65,6 +16,27 @@ html{
     background-size: 200% 200%;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
     color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    #gameBoard {
+        flex-direction: column!important;
+    }
+    .hraciPole{
+        gap: 5px!important;
+    }
+    .karta{
+        box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
+        -webkit-box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
+        -moz-box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
+    }
+    html{
+        background-size: 400% 400%!important;
+    }
+}
+
+.red{
+    background-color: red !important;
 }
 
 @keyframes otaceni {
@@ -97,33 +69,45 @@ html{
 	}
 }
 
-body{
+.celaObrazovka{
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    align-items: center;
+    flex-direction: column;
     margin: 0;
-    padding: 0;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .flex-collumn{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: fit-content;
+    gap: 20px;
 }
 
 .radek{
+    gap: 20px;
     display: flex;
-    justify-content: space-between;
+    align-content: center;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    margin-bottom: -20px;
 }
 
 #menu, #vyhra, #info{
+    position:relative;
     display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
     width: fit-content;
+    min-width: 100px;
     padding: 50px;
     border-radius: 50px;
     background-color: rgba(10, 10, 10, 0.7);
@@ -135,19 +119,16 @@ body{
     text-align: left;
 }
 
-#menu button{
-    width: fit-content;
-    margin: auto;
-}
-
 #gameBoard{
     display: flex;
     flex-direction: row;
-    gap: 80px;
+    gap: 50px;
+    align-items: center;
 }
 
 .welcomeText{
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 #hlavicka{
@@ -161,8 +142,9 @@ body{
     grid-template-columns: repeat(var(--sloupce), 1fr);
     grid-template-rows: repeat(var(--radky), 1fr);
     gap: 15px;
-    max-width: 800px;
-    margin: auto;
+    max-width: 80vw;
+    max-height: 80vh;
+    aspect-ratio: 1;
 }
 
 .hraciPole img{
@@ -198,12 +180,69 @@ body{
     -moz-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
 }
 
+.back{
+    position: absolute;
+    color: white;
+    padding: 10px!important;
+    top: 25px;
+    left: 25px;
+    border-radius: 50px !important;
+    aspect-ratio: 1/1;
+}
+
+.kulate{
+    padding: 10px!important;
+    border-radius: 50px !important;
+    aspect-ratio: 1/1;
+}
+
+.back svg{
+    fill: white;
+}
+
+.rozlozeni{
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
 /* Formulář */
 
 label{
     margin-top: 10px;
 }
 
+.buttonIn {
+    width: 300px;
+    position: relative;
+    margin-top: 10px;
+    padding-right: 20px;
+}
+
+input {
+    width: 100%;
+    margin: 0px;
+    padding: 15px;
+    outline: none;
+    border-radius: 50px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.uvnitr {
+    position: absolute;
+    height: 40px;
+    aspect-ratio: 1;
+    padding: 0;
+    top: 7px;
+    border-radius: 50px;
+    right: 5px;
+    z-index: 2;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #1e90ff;
+    transform: translateX(2px);
+}
 
 .selected{
     background-color: red !important;
@@ -233,10 +272,10 @@ label{
 
 /* ANIMOVANÝ NADPIS PEXESO */
 
-.nadpis {
+.pexeso {
     width: 40vw;
 }
-.nadpis path {
+.pexeso path {
     fill: none;
     stroke: white;
     stroke-width: 1px;
@@ -244,23 +283,64 @@ label{
     stroke-dashoffset: 600px;
     stroke-linecap: round;
     stroke-linejoin: round;
-    animation: draw-stroke 4s linear forwards;
+    animation: draw-stroke 3s linear forwards;
 }
+
+.leaderboards{
+    max-width: 100%;
+    max-height: 100px;
+    width: auto;
+}
+
+.leaderboards path{
+    fill: none;
+    stroke: white;
+    stroke-width: 1px;
+    stroke-dasharray: 600px;
+    stroke-dashoffset: 600px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: draw-stroke 7s linear forwards;
+}
+
 @keyframes draw-stroke {
     100% {
       stroke-dashoffset: 0;
     }
 }
+
 .playerOnMove{
     color: red;
+}
+
+#playerList, .listOfPlayers{
+    text-align: left;
+    font-size: 20px;
+}
+
+#players{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#tlacitka{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 
 /* TLAČÍTKO */
 
 .glow-on-hover {
+    margin:auto;
+    margin-top:20px;
     width: 220px;
     height: 50px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
     border: none;
     outline: none;
     color: #111;
@@ -268,7 +348,8 @@ label{
     cursor: pointer;
     position: relative;
     z-index: 0;
-    border-radius: 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
 }
 
 .glow-on-hover:before {
@@ -286,7 +367,7 @@ label{
     animation: glowing 20s linear infinite;
     opacity: 0;
     transition: opacity .3s ease-in-out;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 .glow-on-hover:active {
@@ -306,7 +387,7 @@ label{
     background: #FFF;
     left: 0;
     top: 0;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 @keyframes glowing {
@@ -319,3 +400,139 @@ label{
 .winner{
     color: goldenrod !important;
 }
+
+/* LEADERBOARDS */
+.row {
+    align-self: center;
+    display: flex;
+    width: 1200px;
+    max-width: 100%;
+    gap: 20px;
+  }
+.column {
+    flex: 33%;
+}
+  
+@media screen and (max-width: 768px) {
+    .row {
+      flex-direction: column;
+    }
+}
+
+#pointsEarned, #wins, #gamesPlayed {
+    padding-left: 25px;
+    
+    li{
+        font-size: 18px;
+    }
+    li:first-child{
+        color: goldenrod;
+        font-size: 24px;
+        text-shadow: goldenrod 1px 0 10px;
+    }
+    li:nth-child(2){
+        color: #C0C0C0;
+        font-size: 22px;
+        text-shadow: #C0C0C0 1px 0 10px;
+    }
+    li:nth-child(3){
+        color: #CD7F32;
+        font-size: 20px;
+        margin-bottom: 10px;
+        text-shadow: #CD7F32 1px 0 10px;
+    }
+}
+
+/* vyber sady */
+
+.vodiapicker{
+    display: none; 
+  }
+  
+  #a{
+    padding-left: 0px;
+    margin: 0px;
+  }
+  
+  #a img, .btn-select img{
+    height: 70px;
+    width: auto;
+  }
+  
+  #a li{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 10px;
+  }
+  
+  #a li:hover{
+   background-color: #F4F3F3;
+  }
+  
+  #a li img{
+    margin-bottom: 0px;
+    border-radius: 5px;
+  }
+  
+  #a li span, .btn-select li span{
+    margin-left: 30px;
+  }
+  
+  /* item list */
+  
+  .dropdown{
+    display: none;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 10px;
+    
+  }
+  
+  .open{
+    display: show !important;
+  }
+  
+  .btn-select{
+    margin-top: 10px;
+    width: 100%;
+    max-width: 350px;
+    height: 80px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+   
+  }
+  .btn-select li{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding-bottom: 0px;
+  }
+
+  .btn-select li img{
+    border-radius: 5px;
+  }
+  
+  .btn-select:hover li{
+    margin-left: 0px;
+  }
+  
+  .btn-select:hover{
+    background-color: #F4F3F3;
+    border: 1px solid transparent;
+    box-shadow: inset 0 0px 0px 1px #ccc;
+    
+    
+  }
+  
+  .btn-select:focus{
+     outline:none;
+  }
+  
+  .sady-select{
+    margin-left: 50px;
+  }
+  

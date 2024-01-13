@@ -1,6 +1,3 @@
-// když se klikne potřetí na jednu ze dvou otočených karet, nezůstane otočená ale skryje se
-// buď zakázat otočení téhle karty, nebo to nějak jinak ošetřit
-
 const hraciPole = document.getElementById('hraciPole');
 let karty = [];
 let otoceneKarty = [];
@@ -9,74 +6,86 @@ const online = document.getElementById('online');
 const menu = document.getElementById('menu');
 const seznamHracu = document.getElementById('seznamHracu');
 const hlavicka = document.getElementById('hlavicka');
-const naTahu = document.getElementById('naTahu');
 const vysledky = document.getElementById('vyhra');
 const vyherce = document.getElementById('vyherce');
+const gameStart = document.getElementById('gameStart');
 let listHracu = [];
 let pocetHracu = 1;
 let aktualniHrac = 0;
-let sloupce = 0;
-let radky = 0;
-  
-  function addPlayer() {
+let sloupce = 6;
+let radky = 6;
+
+function backFromLocal() {
+    window.location.href = 'index.html';
+}
+
+function addPlayer() {
     pocetHracu++;
     const template = document.getElementById("player");
     const newPlayer = template.content.cloneNode(true);
     const inputId = newPlayer.getElementById("inputId")
     inputId.id = `hrac${pocetHracu}`;
-    pridanaTlacitka.appendChild(newPlayer);
-  }
-  
-  function c4xr4function() {
+    tlacitka.appendChild(newPlayer);
+    if(pocetHracu === 2) odebratHrace.classList.remove('skryte');
+    if(pocetHracu === 6) pridatHrace.classList.add('skryte');
+}
+
+function c4xr4function() {
     c4xr4.classList.add("selected");
     c6xr6.classList.remove("selected");
     c8xr8.classList.remove("selected");
     sloupce = 4;
     radky = 4;
-  }
-  
-  function c6xr6function() {
+}
+
+function c6xr6function() {
     c4xr4.classList.remove("selected");
     c6xr6.classList.add("selected");
     c8xr8.classList.remove("selected");
     sloupce = 6;
     radky = 6;
-  }
-  
-  function c8xr8function() {
+}
+
+function c8xr8function() {
     c4xr4.classList.remove("selected");
     c6xr6.classList.remove("selected");
     c8xr8.classList.add("selected");
     sloupce = 8;
     radky = 8;
-  }
+}
 
 
-    function start(){   
-            for(let i = 0; i < pocetHracu; i++){
-                listHracu.push({
-                    id: i,
-                    name: document.getElementById(`hrac${i+1}`).value,
-                    pocetBodu: 0
-                });
-            }
-            const gameStartTemp = gameStart.content.cloneNode(true);
-            menu.innerHTML ="";
-            menu.appendChild(gameStartTemp);
-            naTahu.innerText = listHracu[aktualniHrac].name;
-            menu.classList.add('skryte');
-            hra.classList.remove('skryte');
-            hraciPole.style.setProperty('--sloupce', sloupce);
-            hraciPole.style.setProperty('--radky', radky);
-            vytvorHraciPole(radky * sloupce);
-        }   
-    
+function start() {
+    listHracu = [];
+    for (let i = 0; i < pocetHracu; i++) {
+        if(document.getElementById(`hrac${i + 1}`).value === ""){
+            startError.innerText = "Jméno hráče nesmí být prázdné.";
+            return;
+        }
+        listHracu.push({
+            id: i,
+            name: document.getElementById(`hrac${i + 1}`).value,
+            pocetBodu: 0
+        });
+    }
+    const gameStartTemp = gameStart.content.cloneNode(true);
+    menu.remove();
+    document.body.appendChild(gameStartTemp);
+    const hraciPole = document.getElementById("hraciPole");
+    hraciPole.style.setProperty('--sloupce', sloupce);
+    hraciPole.style.setProperty('--radky', radky);
+    vytvorHraciPole(radky * sloupce);
+    vypisHrace(listHracu, aktualniHrac);
+}
 
 
-function removeGrandParent(element) {
-const grandparentElement = element.parentElement.parentElement;
-grandparentElement.remove();
-pocetHracu--;
+
+function removePlayer() {
+    const lastPlayer = document.getElementById("hrac" + pocetHracu);
+    lastPlayer.remove();
+    pocetHracu--;
+    if(pocetHracu === 5) pridatHrace.classList.remove('skryte');
+    if(pocetHracu === 1) odebratHrace.classList.add('skryte');
 }
 
 function picsum(velikost) {
@@ -87,10 +96,18 @@ function picsum(velikost) {
     return obrazky;
 }
 
+function sada(velikost, sada){
+    let obrazky = []
+    for (let i = 0; i < velikost / 2; i++) {
+        obrazky.push(`img/sady/${sada}/${i+1}.webp`);
+    }
+    return obrazky;
+}
+
 function vytvorHraciPole(velikost) {
     const vsechnyKarty = picsum(velikost);
     const obrazky = vsechnyKarty.concat(vsechnyKarty); // Každý obrázek pouze jednou
-    
+
     const shuffle = (array) => array.sort(() => Math.random() - 0.5); // funkce na přeházení prvků v poli
     const nahodneIndexy = shuffle([...Array(velikost).keys()]); // vytvoří pole přeházených indexů od 0 do velikost-1
 
@@ -107,36 +124,59 @@ function vytvorHraciPole(velikost) {
             url: obrazky[nahodneIndexy[i]],
             revealed: false
         });
-
-        hraciPole.appendChild(kartaElement); // co znamená tohle?
-        kartaElement.addEventListener('click', otocKartu); // proč je ve foru add event listener?? 
+        const hraciPole = document.getElementById('hraciPole')
+        hraciPole.appendChild(kartaElement);
+        kartaElement.addEventListener('click', otocKartu);
     }
-    
+
+}
+
+function vypisHrace(listHracu, aktualniHrac) {
+    playerList.innerHTML = "";
+    for (const player of listHracu) {
+        const newPlayer = playerListItem.content.cloneNode(true);
+
+        // Použití querySelector na nově vytvořené šabloně
+        const playerNameElement = newPlayer.querySelector('.playerName');
+        const playerPointsElement = newPlayer.querySelector('.playerPoints');
+
+        playerNameElement.textContent = player.name;
+        playerPointsElement.textContent = player.pocetBodu;
+
+        if (player.id === aktualniHrac) {
+            playerNameElement.classList.add('playerOnMove');
+        }
+
+        playerList.appendChild(newPlayer);
+    }
 }
 
 function otocKartu(event) {
     const index = event.target.closest('.karta').dataset.index;
 
     // Ověření, zda máme platný index
-    if (index !== undefined && karty[index] !== undefined) {
+    if (index != undefined && karty[index] !== undefined) {
         if (!karty[index].revealed) {
             karty[index].revealed = true;
             otoceneKarty.push(karty[index]);
-            
+
+            if (event.target.classList.contains('logo')) {
+                event.target.src = karty[index].url;
+            }
+
             let prvniIndex = karty.indexOf(otoceneKarty[0]);
             let druhyIndex = karty.indexOf(otoceneKarty[1]);
             let prvniElement = document.querySelector(`[data-index="${prvniIndex}"]`);
             let druhyElement = document.querySelector(`[data-index="${druhyIndex}"]`);
-            if(otoceneKarty.length  == 2){
+            if (otoceneKarty.length == 2) {
                 overKarty(otoceneKarty[0], otoceneKarty[1], prvniElement, druhyElement);
             }
 
             if (otoceneKarty.length === 3) {
-                console.log(otoceneKarty);
-                if(otoceneKarty[0] === otoceneKarty[2]){
-                    druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;    
-                } else if(otoceneKarty[1] === otoceneKarty[2]){
-                    prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;    
+                if (otoceneKarty[0] === otoceneKarty[2]) {
+                    druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
+                } else if (otoceneKarty[1] === otoceneKarty[2]) {
+                    prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
                 } else {
                     prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
                     druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
@@ -147,58 +187,43 @@ function otocKartu(event) {
                 otoceneKarty[0] = pom;
             }
             // Změna obrázku pouze při kliknutí na logo
-            if (event.target.classList.contains('logo')) {
-                event.target.src = karty[index].url;
-            }
-            
+
         }
     }
 }
 
 function overKarty(prvniKarta, druhaKarta, prvniElement, druhyElement) {
-    if (prvniKarta.url === druhaKarta.url) { // tu byla podmínka, že se měly rovnat i idčka, ale to je blbost
+    if (prvniKarta.url === druhaKarta.url) {
         listHracu[aktualniHrac].pocetBodu++;
-        console.log(listHracu);
+        vypisHrace(listHracu, aktualniHrac);
         prvniElement.classList.add('skryta-karta');
         druhyElement.classList.add('skryta-karta');
         let soucetBodu = 0;
-        for(let i = 0; i < pocetHracu; i++){
-            soucetBodu+=listHracu[i].pocetBodu;
+        for (let i = 0; i < pocetHracu; i++) {
+            soucetBodu += listHracu[i].pocetBodu;
         }
-        if(soucetBodu == karty.length/2){
-            console.log("Konec hry!");
-
-            hra.classList.add('skryte');
-            let vyherci = kdoVyhral(listHracu, pocetHracu);
-            vyherce.innerText = vyherci[0].name;
-            if(listHracu.length > 1){
-                for(let i = 1; i < vyherci.length; i++){
-                    vyherce.innerText += ` a ${vyherci[i].name}`;
-                }
-            }
-            for(let i = 0; i < vyherci.length; i++){
-                vysledky.innerHTML += `<p>${vyherci[i].name} - ${vyherci[i].pocetBodu} b</p>`;
-            }
-            vysledky.classList.remove('skryte');
+        if (soucetBodu == karty.length / 2) {
+            const hraciPole = document.getElementById('hraciPole');
+            hraciPole.remove();
         }
     } else {
         prvniKarta.revealed = false;
         druhaKarta.revealed = false;
         aktualniHrac++;
-        if(aktualniHrac === pocetHracu){
+        if (aktualniHrac === pocetHracu) {
             aktualniHrac = 0;
         }
-        naTahu.innerText = listHracu[aktualniHrac].name;
+        vypisHrace(listHracu, aktualniHrac);
     }
 }
 
-function kdoVyhral(hraci, pocetHracu){
+function kdoVyhral(hraci, pocetHracu) {
     let hracVyherce = [];
     hracVyherce.push(hraci[0]);
-    for(let i = 1; i < pocetHracu; i++){
-        if(hraci[i].pocetBodu > hracVyherce[0].pocetBodu){
+    for (let i = 1; i < pocetHracu; i++) {
+        if (hraci[i].pocetBodu > hracVyherce[0].pocetBodu) {
             hracVyherce[0] = hraci[i];
-        } else if(hraci[i].pocetBodu === hracVyherce[0].pocetBodu){
+        } else if (hraci[i].pocetBodu === hracVyherce[0].pocetBodu) {
             hracVyherce.push(hraci[i]);
         }
     }

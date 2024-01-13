@@ -9,44 +9,64 @@
     <title>Pexeso</title>
   </head>
 
-  <body>
+  <body class="celaObrazovka">
     <div id="menu">
+      <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
       <div class="flex-collumn">
         <label>Zadej své jméno:</label>
         <input type="text" value="hrac1" id="jmenoHrace" />
-        <button id="submitName">potvrdit</button>
+        <button onclick="submitName()" class="tlacitko">potvrdit</button>
+        <div id="chyba"></div>
       </div>
     </div>
     <div id="gameBoard" class="hraciPole skryte"></div>
   </body>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="js/online.js" defer></script>
+  <script src="js/vyber-sady.js" defer></script>
   <template id="selectionButtons">
-    <button onclick="showCreateLobbyMenu()">vytvořit hru</button
-    ><button onclick="showJoinLobbyMenu()">připojit se ke hře</button>
+    <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
+    <button onclick="showCreateLobbyMenu()" class="tlacitko">vytvořit hru</button>
+    <br>
+    <button onclick="showJoinLobbyMenu()" class="tlacitko">připojit se ke hře</button>
   </template>
 
   <template id="createLobbyMenu">
+    <button onclick="backToSelectionButtons()" class="tlacitko back"><img src="svg/left-long-solid.svg"></i></button>
     <label>Zadej maximální počet hráčů</label>
     <input type="text" value="2" id="maxPlayers" />
+    <select class="vodiapicker">
+      <option value="sada1" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">1. sada</option>
+      <option value="sada2" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">English</option>
+      <option value="sada3" class="test" data-thumbnail="https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?cs=srgb&dl=pexels-trace-constant-707046.jpg&fm=jpg">English</option>
+    </select>
+    <div class="sady-select">
+    <button class="btn-select" value="">Vyberte sadu</button>
+    <div class="dropdown" style="display:none">
+    <ul id="a"></ul>
+    </div>
+    </div>
+    <div>Zvolte rozložení:</div>
     <div class="radek">
       <button id="c4xr4" onclick="c4xr4function()" class="tlacitko">4x4</button>
       <button id="c6xr6" onclick="c6xr6function()" class="tlacitko selected">6x6</button>
       <button id="c8xr8" onclick="c8xr8function()" class="tlacitko">8x8</button>
     </div>
-    <button id="submitLobby" onclick="submitLobby()">potvrdit</button>
+    <button id="submitLobby" onclick="submitLobby()" class="tlacitko">potvrdit</button>
     <span id="lobbyCreateError"></span>
   </template>
-  <template id="lobby"
-    ><button onclick="gameStart()">start</button>
+  <template id="lobby">
     <div>Maximální počet hráčů je: <span class="maxPlayers"></span></div>
     <div>Velikost hracího pole je: <span class="gameSize"></span></div>
     <div>Kód hry je: <span class="lobbyCode"></span></div>
     <div class="listOfPlayers"></div>
+    <button class="glow-on-hover" onclick="gameStart()">start</button>
+    <div id="startAlert"></div>
   </template>
   <template id="lobbyJoin">
+    <button onclick="backToSelectionButtons()" class="tlacitko back"><img src="svg/left-long-solid.svg"></i></button>
     <label>Zadej kód hry:</label><input type="text" id="lobbyCodeInput" />
-    <button onclick="submitLobbyCode()">potvrdit</button>
+    <button onclick="submitLobbyCode()" class="tlacitko">potvrdit</button>
     <span id="lobbyJoinError"></span>
   </template>
   <template id="player">
@@ -72,5 +92,8 @@
     <div class="karta" onclick="turn(this)">
       <img class="logo" src="img/remante-logo.jpg" alt="karta" />
     </div>
+  </template>
+  <template id="houseButton">
+    <button onclick="backFromOnline()" class="tlacitko back"><img src="svg/house-solid.svg"></i></button>
   </template>
 </html>

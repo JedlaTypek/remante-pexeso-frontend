@@ -8,12 +8,11 @@
     <link rel="icon" type="image/x-icon" href="img/favicon-bez-pozadi.png">
     <title>Pexeso</title>
   </head>
-  <body>
+  <body class="celaObrazovka">
     <div id="menu">
       <svg
-        class="nadpis"
+        class="pexeso"
         width="1005"
-        height="180"
         viewBox="0 0 265.90625 56.885417"
         version="1.1"
         xmlns:svg="http://www.w3.org/2000/svg"
@@ -42,12 +41,19 @@
       <p class="welcomeText">
         Vítej na stránce, kde můžeš převálcovat svého kamaráda ve hře pexeso!
       </p>
-      <div class="radek">
+      <div class="flex-collumn">
         <button class="glow-on-hover" id="local">Hra na jednom počítači</button>
         <button class="glow-on-hover" id="online">Hra online</button>
+        <button class="glow-on-hover" id="leaderboards">Žebříčky nejlepších</button>
+      </div>
+      <div class="footer">
+        <p>Pravidla</p>
+        <p>&#x2022;</p>
+        <p>O projektu</p>
       </div>
     </div>
   </body>
+  <!-- Tohle až dolů se může smazat ne? -->
   <template id="createGameMenu">
     <div id="players">
       <div id="tlacitka">

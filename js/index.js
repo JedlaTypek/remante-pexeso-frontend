@@ -5,3 +5,7 @@ online.addEventListener('click', function(){
 local.addEventListener("click", () => {
     window.location.href = 'local.html';
 });
+
+leaderboards.addEventListener("click", () => {
+    window.location.href = 'leaderboards.html';
+});
