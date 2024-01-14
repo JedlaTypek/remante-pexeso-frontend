@@ -1,14 +1,6 @@
 const hraciPole = document.getElementById('hraciPole');
 let karty = [];
 let otoceneKarty = [];
-const local = document.getElementById('local');
-const online = document.getElementById('online');
-const menu = document.getElementById('menu');
-const seznamHracu = document.getElementById('seznamHracu');
-const hlavicka = document.getElementById('hlavicka');
-const vysledky = document.getElementById('vyhra');
-const vyherce = document.getElementById('vyherce');
-const gameStart = document.getElementById('gameStart');
 let listHracu = [];
 let pocetHracu = 1;
 let aktualniHrac = 0;
@@ -16,8 +8,15 @@ let sloupce = 6;
 let radky = 6;
 let sada = "";
 
+const menuTemplateClone = menuTemplate.content.cloneNode(true);
+document.body.appendChild(menuTemplateClone);
+
 function backFromLocal() {
     window.location.href = 'index.html';
+}
+
+function localMenu() {
+    window.location.href = 'local.html';
 }
 
 function addPlayer() {
@@ -55,11 +54,11 @@ function c8xr8function() {
     radky = 8;
 }
 
-function vybratSadu(sadaInput){
+function vybratSadu(sadaInput, sadaText){
     sada = sadaInput;
-    console.log(sada);
     popup.classList.remove('active');
-}
+    ukazPopupText.innerHTML = sadaText;
+  }
 
 function start() {
     listHracu = [];
@@ -172,6 +171,7 @@ function otocKartu(event) {
 
             if (event.target.classList.contains('logo')) {
                 event.target.src = karty[index].url;
+                document.querySelector(`[data-index="${index}"]`).classList.add('otocena-karta');
             }
 
             let prvniIndex = karty.indexOf(otoceneKarty[0]);
@@ -196,8 +196,6 @@ function otocKartu(event) {
                 otoceneKarty = [];
                 otoceneKarty[0] = pom;
             }
-            // Změna obrázku pouze při kliknutí na logo
-
         }
     }
 }
@@ -215,6 +213,8 @@ function overKarty(prvniKarta, druhaKarta, prvniElement, druhyElement) {
         if (soucetBodu == karty.length / 2) {
             const hraciPole = document.getElementById('hraciPole');
             hraciPole.remove();
+            const endGameButtonsClone = endGameButtons.content.cloneNode(true);
+            backButtons.appendChild(endGameButtonsClone);
         }
     } else {
         prvniKarta.revealed = false;

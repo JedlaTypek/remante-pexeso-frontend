@@ -9,8 +9,14 @@
     <title>Pexeso</title>
   </head>
   <body class="celaObrazovka">
+    
+  </div>
+  </body>
+  <script src="js/local.js" defer></script>
+  <script src="js/vyber-sady.js" defer></script>
+  <template id="menuTemplate">
     <div id="menu">
-      <button onclick="backFromLocal()" class="tlacitko back"><img src="svg/house-solid.svg"></button>
+    <button onclick="backFromLocal()" class="tlacitko back"><img src="svg/house-solid.svg"></button>
       <div id="players">
         <h2>Hráči:</h2>
         <div id="tlacitka">
@@ -19,7 +25,7 @@
         <button id="pridatHrace" class="tlacitko kulate" onclick="addPlayer()"><img src="svg/plus-solid.svg"></button> 
         <button id="odebratHrace" class="tlacitko kulate red skryte" onclick="removePlayer()"><img src="svg/minus-solid.svg"></button>
       </div>
-      <button id="ukazPopup" onclick="ukazPopup()" class="tlacitko">Vybrat sadu</button>
+      <button id="ukazPopupText" onclick="ukazPopup()" class="tlacitko">Vybrat sadu</button>
       <div>Zvolte rozložení:</div>
       <div class="radek rozlozeni">
         <button id="c4xr4" onclick="c4xr4function()" class="tlacitko">4x4</button>
@@ -30,17 +36,15 @@
       <div id="startError"></div>
     </div>
     <div id="popup" class="popup-container">
-      <div id="popupContent" class="popup-box"></div>
-  </div>
-  </body>
-  <script src="js/local.js" defer></script>
-  <script src="js/vyber-sady.js" defer></script>
+    <div id="popupContent" class="popup-box"></div>
+  </template>
   <template id="player">
       <input id="inputId"type="text" />
   </template>
   <template id="gameStart">
     <div id="gameBoard">
       <div id="info">
+        <div id="backButtons"></div>
         <h3>Body:</h3>
         <div id="playerList"></div>
       </div>
@@ -65,6 +69,10 @@
     <h2 id="nadpis"></h2>
     <div id="gallery" class="hraciPole nahled"></div>
     <button id="vybratSaduButton" class="tlacitko">Vybrat sadu</button>
+</template>
+<template id="endGameButtons">
+  <button onclick="backFromLocal()" class="tlacitko back"><img src="svg/house-solid.svg"></button>
+  <button onclick="localMenu()" class="tlacitko back"><img src="svg/left-long-solid.svg"></button>
 </template>
 </html>
 

@@ -13,10 +13,11 @@ function backFromOnline(){
 
 function backFromGameEnd(){
   const clone = selectionButtons.content.cloneNode(true);
-  menu.innerHTML = "";
   menu.appendChild(clone);
   menu.classList.remove('skryte');
-  gameBoard.remove();
+  gameBoard.innerHTML = "";
+  gameBoard.classList.add('skryte');
+  //document.body.appendChild(gameBoardTemplate.content.cloneNode(true))
 }
 
 function backToSelectionButtons(){
@@ -61,6 +62,8 @@ function createLobby(lobbyData) {
   maxPlayersSpan.innerText = lobbyData.maxPlayers;
   const gameSizeSpan = clone.querySelector(".gameSize");
   gameSizeSpan.innerText = lobbyData.gameDesk.length;
+  const sadaSpan = clone.querySelector(".sada");
+  sadaSpan.innerText = lobbyData.sada;
   const lobbyCodeSpan = clone.querySelector(".lobbyCode");
   lobbyCodeSpan.innerText = lobbyData.lobbyCode;
   menu.innerHTML = "";
@@ -146,10 +149,15 @@ function c8xr8function() {
 
 async function submitLobby() {
   const maxPlayers = document.getElementById("maxPlayers").value;
+  if(maxPlayers < 2 || isNaN(maxPlayers)){
+    document.getElementById("lobbyCreateError").innerText = "V lobby musí být minimálně 2 hráči.";
+    return;
+  }
   if(sada === "") {
     document.getElementById("lobbyCreateError").innerText = "Musíš si vybrat sadu.";
     return;
   }
+  const sadaName = ukazPopupText.innerHTML;
   const response = await fetch("http://pexeso.lol:3006/lobby", {
     method: "POST",
     headers: {
@@ -159,7 +167,8 @@ async function submitLobby() {
       maxPlayers: maxPlayers,
       width: sloupce,
       height: radky,
-      sada: sada,
+      sadaFolder: sada,
+      sadaName: sadaName,
       socketId: socket.id,
     }),
   });
@@ -198,6 +207,7 @@ socket.on("hraZacala", (gameInfo) => {
   const found = gameInfo.players.find((element) => element.id == socket.id);
   const yourName = document.querySelector(".yourName");
   yourName.innerText = found.name;
+  const card = document.getElementById('card');
   for (let i = 0; i < gameInfo.gameDesk; i++) {
     const cardTemplate = card.content.cloneNode(true);
     cardTemplate.querySelector(".karta").dataset.index = i;
@@ -216,7 +226,9 @@ function updatePlayerList(playerData, playerOnMove) {
     }
     playerNames.innerText = playerInfo.name;
     const playerPoints = playerListItem.querySelector(".playerPoints");
-    playerPoints.innerText = playerInfo.points;
+    if(playerInfo.points != undefined){
+      playerPoints.innerText = playerInfo.points;
+    }
     listOfPlayers.appendChild(playerListItem);
   }
 }

@@ -9,3 +9,11 @@ local.addEventListener("click", () => {
 leaderboards.addEventListener("click", () => {
     window.location.href = 'leaderboards.html';
 });
+
+function toRules(){
+    window.location.href = 'rules.html';
+}
+
+function toAbout(){
+    window.location.href = 'about.html';
+}
