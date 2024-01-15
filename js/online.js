@@ -26,6 +26,11 @@ function backToSelectionButtons(){
   menu.appendChild(clone);
 }
 
+function leftLobby(){
+  socket.emit("leftLobby");
+  backToSelectionButtons();
+}
+
 function submitName() {
   const jmeno = document.getElementById("jmenoHrace").value;
   if(jmeno != "" && jmeno.length <= 15){
@@ -76,7 +81,6 @@ function createLobby(lobbyData) {
   }
 }
 
-//původně byly ve funkci
 socket.on("idHrace", (jmeno) => {
   console.log(jmeno);
   const clone = player.content.cloneNode(true);
