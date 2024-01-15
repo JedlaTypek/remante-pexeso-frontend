@@ -184,10 +184,14 @@ function otocKartu(event) {
 
             if (otoceneKarty.length === 3) {
                 if (otoceneKarty[0] === otoceneKarty[2]) {
+                    druhyElement.classList.remove('otocena-karta');
                     druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
                 } else if (otoceneKarty[1] === otoceneKarty[2]) {
                     prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
+                    prvniElement.classList.remove('otocena-karta');
                 } else {
+                    prvniElement.classList.remove('otocena-karta');
+                    druhyElement.classList.remove('otocena-karta');
                     prvniElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
                     druhyElement.innerHTML = `<img class="logo" src="img/remante-logo.jpg" alt="">`;
                 }

@@ -74,23 +74,26 @@ function createLobby(lobbyData) {
     clone.querySelector(".playerName").innerText = playerName;
     listOfPlayers.appendChild(clone);
   }
-
-  socket.on("idHrace", (jmeno) => {
-    const clone = player.content.cloneNode(true);
-    const listOfPlayers = document.querySelector(".listOfPlayers");
-    clone.querySelector(".playerName").innerText = jmeno;
-    listOfPlayers.appendChild(clone);
-  });
-  socket.on("updateHrace", (playerNames) => {
-    const listOfPlayers = document.querySelector(".listOfPlayers");
-    listOfPlayers.innerText = "";
-    for (const playerName of playerNames) {
-      const clone = player.content.cloneNode(true);
-      clone.querySelector(".playerName").innerText = playerName;
-      listOfPlayers.appendChild(clone);
-    }
-  });
 }
+
+//původně byly ve funkci
+socket.on("idHrace", (jmeno) => {
+  console.log(jmeno);
+  const clone = player.content.cloneNode(true);
+  const listOfPlayers = document.querySelector(".listOfPlayers");
+  clone.querySelector(".playerName").innerText = jmeno;
+  listOfPlayers.appendChild(clone);
+});
+socket.on("updateHrace", (playerNames) => {
+  console.log(playerNames);
+  const listOfPlayers = document.querySelector(".listOfPlayers");
+  listOfPlayers.innerText = "";
+  for (const playerName of playerNames) {
+    const clone = player.content.cloneNode(true);
+    clone.querySelector(".playerName").innerText = playerName;
+    listOfPlayers.appendChild(clone);
+  }
+});
 
 async function submitLobbyCode() {
   const lobbyCode = document.getElementById("lobbyCodeInput").value;
@@ -120,6 +123,7 @@ async function submitLobbyCode() {
     return;
   }
   const data = await response.json();
+  console.log(data);
   createLobby(data);
 }
 
@@ -216,6 +220,7 @@ socket.on("hraZacala", (gameInfo) => {
 });
 
 function updatePlayerList(playerData, playerOnMove) {
+  console.log(playerData, playerOnMove);
   const listOfPlayers = document.querySelector(".listOfPlayers");
   listOfPlayers.innerText = "";
   for (const playerInfo of playerData) {
