@@ -26,8 +26,8 @@ function addPlayer() {
     const inputId = newPlayer.getElementById("inputId")
     inputId.id = `hrac${pocetHracu}`;
     tlacitka.appendChild(newPlayer);
-    if(pocetHracu === 2) odebratHrace.classList.remove('skryte');
-    if(pocetHracu === 6) pridatHrace.classList.add('skryte');
+    if (pocetHracu === 2) odebratHrace.classList.remove('skryte');
+    if (pocetHracu === 6) pridatHrace.classList.add('skryte');
 }
 
 function c4xr4function() {
@@ -54,20 +54,20 @@ function c8xr8function() {
     radky = 8;
 }
 
-function vybratSadu(sadaInput, sadaText){
+function vybratSadu(sadaInput, sadaText) {
     sada = sadaInput;
     popup.classList.remove('active');
     ukazPopupText.innerHTML = sadaText;
-  }
+}
 
 function start() {
     listHracu = [];
-    if(sada === ""){
+    if (sada === "") {
         startError.innerText = "Vyber si nejdřív sadu.";
         return;
     }
     for (let i = 0; i < pocetHracu; i++) {
-        if(document.getElementById(`hrac${i + 1}`).value === ""){
+        if (document.getElementById(`hrac${i + 1}`).value === "") {
             startError.innerText = "Jméno hráče nesmí být prázdné.";
             return;
         }
@@ -93,8 +93,8 @@ function removePlayer() {
     const lastPlayer = document.getElementById("hrac" + pocetHracu);
     lastPlayer.remove();
     pocetHracu--;
-    if(pocetHracu === 5) pridatHrace.classList.remove('skryte');
-    if(pocetHracu === 1) odebratHrace.classList.add('skryte');
+    if (pocetHracu === 5) pridatHrace.classList.remove('skryte');
+    if (pocetHracu === 1) odebratHrace.classList.add('skryte');
 }
 
 function picsum(velikost) {
@@ -105,10 +105,10 @@ function picsum(velikost) {
     return obrazky;
 }
 
-function hraciPoleSada(velikost, sada){
+function hraciPoleSada(velikost, sada) {
     let obrazky = []
     for (let i = 0; i < velikost / 2; i++) {
-        obrazky.push(`img/sady/${sada}/${i+1}.webp`);
+        obrazky.push(`img/sady/${sada}/${i + 1}.webp`);
     }
     return obrazky;
 }

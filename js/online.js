@@ -7,11 +7,11 @@ let radky = 6;
 let sloupce = 6;
 let sada = "";
 
-function backFromOnline(){
+function backFromOnline() {
   window.location.href = 'index.html';
 }
 
-function backFromGameEnd(){
+function backFromGameEnd() {
   const clone = selectionButtons.content.cloneNode(true);
   menu.appendChild(clone);
   menu.classList.remove('skryte');
@@ -20,25 +20,25 @@ function backFromGameEnd(){
   //document.body.appendChild(gameBoardTemplate.content.cloneNode(true))
 }
 
-function backToSelectionButtons(){
+function backToSelectionButtons() {
   const clone = selectionButtons.content.cloneNode(true);
   menu.innerHTML = "";
   menu.appendChild(clone);
 }
 
-function leftLobby(){
+function leftLobby() {
   socket.emit("leftLobby");
   backToSelectionButtons();
 }
 
 function submitName() {
   const jmeno = document.getElementById("jmenoHrace").value;
-  if(jmeno != "" && jmeno.length <= 15){
+  if (jmeno != "" && jmeno.length <= 15) {
     socket.emit("jmenoHrace", jmeno);
     const clone = selectionButtons.content.cloneNode(true);
     menu.innerHTML = "";
     menu.appendChild(clone);
-  } else{
+  } else {
     chyba.innerText = "Jméno nesmí být prázdné ani delší než 15 znaků.";
   }
 };
@@ -55,7 +55,7 @@ function showJoinLobbyMenu() {
   menu.appendChild(clone);
 }
 
-function vybratSadu(sadaInput, sadaText){
+function vybratSadu(sadaInput, sadaText) {
   sada = sadaInput;
   popup.classList.remove('active');
   ukazPopupText.innerHTML = sadaText;
@@ -157,11 +157,11 @@ function c8xr8function() {
 
 async function submitLobby() {
   const maxPlayers = document.getElementById("maxPlayers").value;
-  if(maxPlayers < 2 || isNaN(maxPlayers)){
+  if (maxPlayers < 2 || isNaN(maxPlayers)) {
     document.getElementById("lobbyCreateError").innerText = "V lobby musí být minimálně 2 hráči.";
     return;
   }
-  if(sada === "") {
+  if (sada === "") {
     document.getElementById("lobbyCreateError").innerText = "Musíš si vybrat sadu.";
     return;
   }
@@ -196,7 +196,7 @@ async function gameStart() {
   });
 }
 
-socket.on("notEnoughPlayers", () =>{
+socket.on("notEnoughPlayers", () => {
   startAlert.innerText = "Pro spuštění hry je potřeba alespoň dva hráče.";
 });
 
@@ -235,7 +235,7 @@ function updatePlayerList(playerData, playerOnMove) {
     }
     playerNames.innerText = playerInfo.name;
     const playerPoints = playerListItem.querySelector(".playerPoints");
-    if(playerInfo.points != undefined){
+    if (playerInfo.points != undefined) {
       playerPoints.innerText = playerInfo.points;
     }
     listOfPlayers.appendChild(playerListItem);
@@ -268,7 +268,7 @@ socket.on("turnBack", (cardId) => {
   card.classList.remove('otocena-karta');
   const cardImg = document.querySelector(`[data-index="${cardId}"] img`)
   cardImg.src = "img/remante-logo.jpg";
-  
+
 });
 
 socket.on("playerListChange", (players, playerOnMove) => {

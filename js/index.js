@@ -1,4 +1,4 @@
-online.addEventListener('click', function(){
+online.addEventListener('click', function () {
     window.location.href = 'online.html';
 })
 
@@ -10,10 +10,10 @@ leaderboards.addEventListener("click", () => {
     window.location.href = 'leaderboards.html';
 });
 
-function toRules(){
+function toRules() {
     window.location.href = 'rules.html';
 }
 
-function toAbout(){
+function toAbout() {
     window.location.href = 'about.html';
 }

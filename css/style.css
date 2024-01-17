@@ -9,38 +9,47 @@
     --gradient-5: #102980;
 
     font-size: 18px;
-}  
+}
 
-html{
+html {
     background: radial-gradient(var(--gradient-2), var(--gradient-4));
     background-repeat: no-repeat;
-	animation: otaceni 15s linear infinite;
+    animation: otaceni 15s linear infinite;
     background-size: 200% 200%;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
     color: white;
 }
 
+p{
+    line-height: 24px;   
+}
+
 @media only screen and (max-width: 768px) {
     #gameBoard {
-        flex-direction: column!important;
+        flex-direction: column !important;
     }
-    .hraciPole{
-        gap: 5px!important;
+
+    .hraciPole {
+        gap: 5px !important;
     }
-    .karta{
-        box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
-        -webkit-box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
-        -moz-box-shadow: 0px 0px 3px 3px rgba(19,21,20,0.5)!important;
+
+    .karta {
+        box-shadow: 0px 0px 3px 3px rgba(19, 21, 20, 0.5) !important;
+        -webkit-box-shadow: 0px 0px 3px 3px rgba(19, 21, 20, 0.5) !important;
+        -moz-box-shadow: 0px 0px 3px 3px rgba(19, 21, 20, 0.5) !important;
     }
-    html{
-        background-size: 400% 400%!important;
-    } .celaObrazovka{
-        margin-top: 30px!important;
-        margin-bottom: 30px!important;
+
+    html {
+        background-size: 400% 400% !important;
+    }
+
+    .celaObrazovka {
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
     }
 }
 
-.red{
+.red {
     background-color: red !important;
 }
 
@@ -48,33 +57,39 @@ html{
     0% {
         background-position: 0% 0%;
     }
+
     25% {
         background-position: 100% 0%;
     }
+
     50% {
         background-position: 100% 100%;
     }
+
     75% {
         background-position: 0% 100%;
     }
+
     100% {
         background-position: 0% 0%;
     }
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.celaObrazovka{
+.celaObrazovka {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -85,20 +100,20 @@ html{
     padding-left: 30px;
 }
 
-.flex-collumn{
+.flex-collumn {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.radek{
+.radek {
     gap: 20px;
     display: flex;
     align-content: center;
 }
 
-.footer{
+.footer {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -107,30 +122,33 @@ html{
     align-items: center;
 }
 
-.odkaz{
+.odkaz {
+    color: white;
     text-decoration: underline;
-    cursor:pointer
+    cursor: pointer
 }
 
-.odkaz:hover{
-    color: var(--akcent);
+.odkaz:hover {
+    color: var(--akcent-hover);
 }
 
-#menu, #vyhra, #info{
-    position:relative;
+#menu,
+#vyhra,
+#info {
+    position: relative;
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
     width: fit-content;
     min-width: 150px;
-    max-width: 90%;
+    max-width: 1000px;
     padding: 30px;
     border-radius: 50px;
     background-color: rgba(10, 10, 10, 0.7);
 }
 
-#info{
+#info {
     height: fit-content;
     align-self: center;
     text-align: left !important;
@@ -138,29 +156,36 @@ html{
     margin-bottom: 30px;
 }
 
-#gameBoard{
+@media (max-width: 1000px) {
+    #menu, #vyhra, #info {
+      width: 90%;
+      max-width: none;
+    }
+  }
+
+#gameBoard {
     display: flex;
     flex-direction: row;
     gap: 50px;
     align-items: center;
 }
 
-.welcomeText{
+.welcomeText {
     margin-bottom: 40px;
     text-align: center;
 }
 
-#lobbyCreateError{
+#lobbyCreateError {
     margin-top: 10px;
 }
 
-#hlavicka{
+#hlavicka {
     text-align: center;
-    color:white;
+    color: white;
     padding: 20px;
 }
 
-.hraciPole{
+.hraciPole {
     display: grid;
     grid-template-columns: repeat(var(--sloupce), 1fr);
     grid-template-rows: repeat(var(--radky), 1fr);
@@ -170,72 +195,73 @@ html{
     aspect-ratio: 1;
 }
 
-.nahled{
+.nahled {
     --sloupce: 6;
     --radky: 6;
     max-height: 60vh;
 }
 
-.karta img{
+.karta img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     aspect-ratio: 1 / 1;
 }
 
-.karta{
+.karta {
     background-color: white;
     overflow: hidden;
-    border-radius: 15% 85% 15% 85% / 85% 15% 85% 15% ;
-    box-shadow: 0px 0px 3px 5px rgba(19,21,20,0.5);
-    -webkit-box-shadow: 0px 0px 3px 5px rgba(19,21,20,0.5);
-    -moz-box-shadow: 0px 0px 3px 5px rgba(19,21,20,0.5);
+    border-radius: 15% 85% 15% 85% / 85% 15% 85% 15%;
+    box-shadow: 0px 0px 3px 5px rgba(19, 21, 20, 0.5);
+    -webkit-box-shadow: 0px 0px 3px 5px rgba(19, 21, 20, 0.5);
+    -moz-box-shadow: 0px 0px 3px 5px rgba(19, 21, 20, 0.5);
     transition: ease-in-out 200ms;
     cursor: pointer;
 }
 
-.karta:hover{
+.karta:hover {
     transform: scale(1.05);
-    box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
-    -webkit-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
-    -moz-box-shadow: 0px 0px 13px 5px rgba(0,199,140,0.5);
+    box-shadow: 0px 0px 13px 5px rgba(0, 199, 140, 0.5);
+    -webkit-box-shadow: 0px 0px 13px 5px rgba(0, 199, 140, 0.5);
+    -moz-box-shadow: 0px 0px 13px 5px rgba(0, 199, 140, 0.5);
 }
 
-@media only screen and (min-width: 769px){
+@media only screen and (min-width: 769px) {
     .hraciPole[style*="--sloupce: 8; --radky: 8"] .otocena-karta {
         z-index: 5;
-      }
-    
+    }
+
     .hraciPole[style*="--sloupce: 8; --radky: 8"] .otocena-karta:hover {
         z-index: 6;
         transform: scale(2);
     }
+
     .hraciPole[style*="--sloupce: 6; --radky: 6"] .otocena-karta {
         z-index: 5;
-      }
-    
+    }
+
     .hraciPole[style*="--sloupce: 6; --radky: 6"] .otocena-karta:hover {
         z-index: 6;
         transform: scale(1.5);
-    }      
+    }
 }
 
-.skryte{
+.skryte {
     display: none !important;
 }
 
-.skryta-karta{
+.skryta-karta {
     opacity: 0;
     pointer-events: none;
 }
 
-.gallery-item{
+.gallery-item {
     background-color: white;
     overflow: hidden;
-    border-radius: 15% 85% 15% 85% / 85% 15% 85% 15% ;
+    border-radius: 15% 85% 15% 85% / 85% 15% 85% 15%;
 }
 
-.gallery-item img{
+.gallery-item img {
     height: 100%;
     width: 100%;
     aspect-ratio: 1;
@@ -243,44 +269,46 @@ html{
 
 }
 
-.back{
-    margin:auto;
+.back {
+    margin: auto;
     color: white;
-    padding: 10px!important;
+    padding: 10px !important;
     border-radius: 50px !important;
     aspect-ratio: 1/1;
 }
 
-.kulate{
-    padding: 10px!important;
+.kulate {
+    padding: 10px !important;
     border-radius: 50px !important;
     aspect-ratio: 1/1;
 }
 
-.back svg{
+.back svg {
     fill: white;
 }
 
-.rozlozeni{
+.rozlozeni {
     margin-top: 5px;
     margin-bottom: 0px;
 }
 
 /* Formulář */
 
-label{
+label {
     margin-top: 10px;
 }
 
-.selected{
+.selected {
     background-color: red !important;
 
 }
+
 /* Tlačítka */
 
 .tlacitko {
     max-width: fit-content;
-    background-color: var(--akcent); /* Green */
+    background-color: var(--akcent);
+    /* Green */
     border: none;
     color: white;
     padding: 16px 32px;
@@ -293,7 +321,7 @@ label{
     transition: ease-in-out 200ms;
 }
 
-.tlacitko:hover{
+.tlacitko:hover {
     background-color: var(--akcent-hover);
     transform: scale(1.1);
 }
@@ -320,20 +348,21 @@ input {
     aspect-ratio: 1;
     padding: 12px;
     top: 5px;
+    bottom: 5px;
     border-radius: 50px;
     right: 7px;
     z-index: 2;
     border: none;
     cursor: pointer;
     transform: translateX(2px);
-    
+
 }
 
-#jmenoHrace{
+#jmenoHrace {
     margin-bottom: unset;
 }
 
-.uvnitr:hover{
+.uvnitr:hover {
     transform: translateX(2px);
 }
 
@@ -342,6 +371,7 @@ input {
 .pexeso {
     width: 40vw;
 }
+
 .pexeso path {
     fill: none;
     stroke: white;
@@ -353,13 +383,13 @@ input {
     animation: draw-stroke 3s linear forwards;
 }
 
-.leaderboards{
+.leaderboards {
     max-width: 100%;
     max-height: 100px;
     width: auto;
 }
 
-.leaderboards path{
+.leaderboards path {
     fill: none;
     stroke: white;
     stroke-width: 1px;
@@ -372,42 +402,44 @@ input {
 
 @keyframes draw-stroke {
     100% {
-      stroke-dashoffset: 0;
+        stroke-dashoffset: 0;
     }
 }
 
-.playerOnMove{
+.playerOnMove {
     color: red;
 }
 
-#playerList, .listOfPlayers{
+#playerList,
+.listOfPlayers {
     text-align: left;
     font-size: 20px;
 }
 
-#players{
+#players {
     width: 100%;
     margin-bottom: 10px;
 }
 
-#tlacitka{
+#tlacitka {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-#potvrdit, .margin-t-20{
-    margin-top: 20px!important;
+#potvrdit,
+.margin-t-20 {
+    margin-top: 20px !important;
 }
 
-.margin-b-10{
+.margin-b-10 {
     margin-bottom: 10px;
 }
 
 /* TLAČÍTKO */
 
 .glow-on-hover {
-    margin:auto;
+    margin: auto;
     width: fit-content;
     height: 50px;
     padding-top: 16px;
@@ -431,7 +463,7 @@ input {
     background: linear-gradient(45deg, var(--gradient-2), var(--gradient-3), var(--gradient-5), var(--gradient-3));
     position: absolute;
     top: -2px;
-    left:-2px;
+    left: -2px;
     background-size: 400%;
     z-index: -1;
     filter: blur(5px);
@@ -464,9 +496,17 @@ input {
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 /* LEADERBOARDS */
@@ -476,36 +516,41 @@ input {
     width: 1200px;
     max-width: 100%;
     gap: 20px;
-  }
+}
+
 .column {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 33%
 }
-  
+
 @media screen and (max-width: 768px) {
     .row {
-      flex-direction: column;
+        flex-direction: column;
     }
 }
 
-#pointsEarned, #wins, #gamesPlayed {
+#pointsEarned,
+#wins,
+#gamesPlayed {
     width: fit-content;
     padding-left: 25px;
-    
-    
-    li:first-child{
+
+
+    li:first-child {
         color: goldenrod;
         font-size: 24px;
         text-shadow: goldenrod 1px 0 10px;
     }
-    li:nth-child(2){
+
+    li:nth-child(2) {
         color: #C0C0C0;
         font-size: 22px;
         text-shadow: #C0C0C0 1px 0 10px;
     }
-    li:nth-child(3){
+
+    li:nth-child(3) {
         color: #CD7F32;
         font-size: 20px;
         margin-bottom: 10px;
@@ -524,8 +569,9 @@ input {
     font-size: 18px;
     color: #f2f2f2;
     font-weight: 500;
-  }
-  .popup-container {
+}
+
+.popup-container {
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -535,38 +581,44 @@ input {
     align-items: center;
     opacity: 0;
     pointer-events: none;
-  }
-  .popup-container.active {
+}
+
+.popup-container.active {
     opacity: 1;
     pointer-events: auto;
     transition: .4s ease;
-  }
-  .popup-container .popup-box {
+}
+
+.popup-container .popup-box {
     background: #f2f2f2;
     border-radius: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     padding: 30px;
     transform: scale(0);
     align-items: center;
-  }
-  .popup-container.active .popup-box {
+}
+
+.popup-container.active .popup-box {
     transform: scale(1);
     transition: .4s ease;
     transition-delay: .25s;
     gap: 10px;
     display: flex;
     flex-direction: column;
-  }
-  .popup-box h2 {
+}
+
+.popup-box h2 {
     color: #333;
     line-height: 1;
     text-align: center;
-  }
-  .popup-box p {
+}
+
+.popup-box p {
     color: #333;
     margin: 12px 0 20px;
-  }
-  .popup-box .close-btn {
+}
+
+.popup-box .close-btn {
     width: 100%;
     padding: 15px;
     background: #6e78ff;
@@ -578,4 +630,4 @@ input {
     font-size: 18px;
     color: #f2f2f2;
     font-weight: 500;
-  }
+}
